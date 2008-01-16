@@ -1,4 +1,4 @@
-package com.esmertec;
+package com.esmertec.memo;
 
 import android.app.Activity;
 import android.os.Bundle;

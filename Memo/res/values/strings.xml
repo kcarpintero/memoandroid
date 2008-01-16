@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Memo</string>
+    <string name="choose_location">Choose a Location</string>
+    <string name="choose_date">Choose Date</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="edit_tag">Tag</string>
+    <string name="edit_desc">Description</string>
+    <string name="edit_contact">Contacts</string>
+</resources>

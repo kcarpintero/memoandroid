@@ -1,11 +1,10 @@
-package com.esmertec;
+package com.esmertec.memo;
 
 import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.net.ContentURI;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-import android.widget.DatePicker.OnDateSetListener;
 
 public class MemoEdit extends Activity {
 	
@@ -35,7 +33,6 @@ public class MemoEdit extends Activity {
 	
 	private TimePicker.OnTimeSetListener mTimeSetListener = new TimePicker.OnTimeSetListener(){
 
-		@Override
 		public void timeSet(TimePicker view, int hourOfday, int minute) {
 			// TODO Auto-generated method stub
 			
@@ -55,7 +52,6 @@ public class MemoEdit extends Activity {
 		Button changeDate = (Button) findViewById(R.id.open_date);
 		changeDate.setOnClickListener(new OnClickListener(){
 
-			@Override
 			public void onClick(View arg0) {
 				new DatePickerDialog(MemoEdit.this, mDateSetListener, 2008,1,1,Calendar.SUNDAY).show();
 			}
@@ -66,7 +62,6 @@ public class MemoEdit extends Activity {
 		Button changeTime = (Button) findViewById(R.id.open_time);
 		changeTime.setOnClickListener(new OnClickListener(){
 
-			@Override
 			public void onClick(View arg0) {
 				new TimePickerDialog(MemoEdit.this, mTimeSetListener, null, 0, 0, false).show();
 				
@@ -78,7 +73,6 @@ public class MemoEdit extends Activity {
 		
 		changeLocation.setOnClickListener(new OnClickListener(){
 
-			@Override
 			public void onClick(View arg0) {
 				
 				ContentURI geoURI = ContentURI.create("geo:" + 0 + "," + 0);

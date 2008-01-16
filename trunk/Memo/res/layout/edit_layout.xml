@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:text="@string/edit_tag" />
+
+		<AutoCompleteTextView id="@+id/edit_tag"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</AutoCompleteTextView>
+	</LinearLayout>
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/edit_contact" />
+
+		<AutoCompleteTextView id="@+id/edit_contact"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+		</AutoCompleteTextView>
+	</LinearLayout>
+
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1">
+
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/edit_desc" />
+
+		<EditText id="@+id/edit_desc"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+		</EditText>
+	</LinearLayout>
+
+	<Button id="@+id/open_date" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/choose_date">
+	</Button>
+
+	<Button id="@+id/open_time" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/choose_time">
+	</Button>
+
+	<Button id="@+id/open_location" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/choose_location">
+	</Button>
+</LinearLayout>

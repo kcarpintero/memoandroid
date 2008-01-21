@@ -15,8 +15,6 @@ public class Memo {
 		public static final String DESCRIPTION = "description";
 		public static final String CONTACT = "contact";
 		public static final String LOCATION = "location";
-
-		public static final String DATE = "date";
 		public static final String TIME = "time";
 
 		/**

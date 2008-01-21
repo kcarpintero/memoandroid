@@ -38,16 +38,22 @@
 			android:layout_height="wrap_content"
 			android:text="@string/edit_desc" />
 
-		<EditText id="@+id/edit_desc"
-			android:layout_width="fill_parent"
+		<EditText id="@+id/edit_desc" android:layout_width="fill_parent"
 			android:layout_height="fill_parent">
 		</EditText>
 	</LinearLayout>
 
-	<Button id="@+id/open_date" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/choose_date">
-	</Button>
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView id="@+id/show_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" />
+		<Button id="@+id/set_time" android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/set_time">
+		</Button>
+	</LinearLayout>
 
 	<Button id="@+id/open_time" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"

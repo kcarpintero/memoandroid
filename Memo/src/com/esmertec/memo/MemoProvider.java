@@ -12,6 +12,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ContentURI;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.esmertec.provider.Memo;
 
@@ -33,10 +34,14 @@ public class MemoProvider extends ContentProvider {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
+			try{
 			db.execSQL("CREATE TABLE memos (_id INTEGER PRIMARY KEY,"
 					+ "activity TEXT," + "description TEXT," + "contact TEXT,"
 					+ "location TEXT," + "date INTEGER," + "time INTEGER,"
 					+ "created INTEGER," + "modified INTEGER" + ");");
+			}catch (Exception e) {
+				Log.v("qinyu", "Create db " + e.getMessage());
+			}
 
 		}
 
@@ -76,9 +81,9 @@ public class MemoProvider extends ContentProvider {
 		int code = URI_MATCHER.match(uri);
 		switch (code) {
 		case MEMOS:
-			return "vnd.android.cursor.dir/com.esmertec.memos";
+			return "vnd.esmertec.cursor.dir/memo";
 		case MEMO_ID:
-			return "vnd.android.cursor.item/com.esmertec.memos";
+			return "vnd.esmertec.cursor.item/memo";
 		default:
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -211,8 +216,8 @@ public class MemoProvider extends ContentProvider {
 
 	static {
 		URI_MATCHER = new ContentURIParser(ContentURIParser.NO_MATCH);
-		URI_MATCHER.addURI("com.esmertec.memo", "memos", MEMOS);
-		URI_MATCHER.addURI("com.esmertec.memo", "memos/#", MEMO_ID);
+		URI_MATCHER.addURI("com.esmertec.provider.Memo", "memos", MEMOS);
+		URI_MATCHER.addURI("com.esmertec.provider.Memo", "memos/#", MEMO_ID);
 
 		MEMO_LIST_PROJECTION_MAP = new HashMap<String, String>();
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.ACTIVITY, "activity");

@@ -53,9 +53,7 @@ public class MemoList extends ListActivity {
 
 	private static final String[] PROJECTION = {
 		Memo.Memos.ACTIVITY,
-		Memo.Memos.DATE,
-//		Memo.Memos._ID,
-		Memo.Memos.TIME
+		Memo.Memos.TIME,
 	};
 
 }

@@ -37,7 +37,7 @@ public class MemoProvider extends ContentProvider {
 			try{
 			db.execSQL("CREATE TABLE memos (_id INTEGER PRIMARY KEY,"
 					+ "activity TEXT," + "description TEXT," + "contact TEXT,"
-					+ "location TEXT," + "date INTEGER," + "time INTEGER,"
+					+ "location TEXT," + "time INTEGER,"
 					+ "created INTEGER," + "modified INTEGER" + ");");
 			}catch (Exception e) {
 				Log.v("qinyu", "Create db " + e.getMessage());
@@ -118,9 +118,6 @@ public class MemoProvider extends ContentProvider {
 			values.put(Memo.Memos.DESCRIPTION, "");
 		}
 
-		if (!values.containsKey(Memo.Memos.DATE)) {
-			values.put(Memo.Memos.DATE, -1);
-		}
 
 		if (!values.containsKey(Memo.Memos.TIME)) {
 			values.put(Memo.Memos.TIME, -1);
@@ -224,7 +221,6 @@ public class MemoProvider extends ContentProvider {
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.DESCRIPTION, "description");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CONTACT, "contact");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.LOCATION, "location");
-		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.DATE, "date");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.TIME, "time");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CREATED_DATE, "created");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.MODIFIED_DATE, "modified");

@@ -3,12 +3,12 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 
-	<LinearLayout android:orientation="horizontal"
+	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 
 		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="@string/edit_tag" />
+			android:layout_height="wrap_content" android:text="@string/edit_activity" />
 
 		<AutoCompleteTextView id="@+id/edit_tag"
 			android:layout_width="fill_parent"
@@ -16,7 +16,7 @@
 		</AutoCompleteTextView>
 	</LinearLayout>
 
-	<LinearLayout android:orientation="horizontal"
+	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
 
@@ -36,32 +36,44 @@
 
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/edit_desc" />
+			android:text="@string/edit_description" />
 
 		<EditText id="@+id/edit_desc" android:layout_width="fill_parent"
 			android:layout_height="fill_parent">
 		</EditText>
 	</LinearLayout>
 
-	<LinearLayout android:orientation="vertical"
+	<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content">
-		<TextView id="@+id/show_time"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" />
+		<TextView id="@+id/text_time"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:layout_weight="1"/>
 		<Button id="@+id/set_time" android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/set_time">
+			android:text="@string/button_label_set_time">
 		</Button>
 	</LinearLayout>
 
-	<Button id="@+id/open_time" android:layout_width="wrap_content"
+
+	<LinearLayout android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView id="@+id/text_location"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" 
+			android:layout_weight="1"/>
+		<Button id="@+id/set_location"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/button_label_set_location">
+		</Button>
+	</LinearLayout>
+
+	<Button id="@+id/save_memo" android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:text="@string/choose_time">
+		android:text="@string/button_label_save_memo">
 	</Button>
 
-	<Button id="@+id/open_location" android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:text="@string/choose_location">
-	</Button>
 </LinearLayout>

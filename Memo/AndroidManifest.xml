@@ -27,12 +27,13 @@
             </intent-filter>
         </activity>
         
-        <activity class="MemoEdit" android:label="@string/title_memo_edit">
-            <intent-filter android:label="@string/resolve_memo_edit">
+        <activity class="MemoEditor" android:label="@string/title_memo_editor">
+            <intent-filter android:label="@string/label_memo_edit_intent">
                 <action android:value="android.intent.action.VIEW" />
                 <action android:value="android.intent.action.EDIT" />
                 <action android:value="com.esmertec.memos.action.EDIT_MEMO" />
                 <category android:value="android.intent.category.DEFAULT" />
+                <category android:value="android.intent.category.SELECTED_ALTERNATIVE" />
                 <type android:value="vnd.esmertec.cursor.item/memo" />
             </intent-filter>
             <intent-filter>
@@ -41,6 +42,8 @@
                 <type android:value="vnd.esmertec.cursor.dir/memo" />
             </intent-filter>
         </activity>
+                
+        <activity class="BrowseMap"/> 
         
 
     </application>

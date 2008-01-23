@@ -1,9 +1,5 @@
 package com.esmertec.memo;
 
-import java.io.FileNotFoundException;
-import java.nio.charset.Charset;
-import java.util.SortedMap;
-
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,7 +11,6 @@ import android.view.View;
 import android.view.Menu.Item;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import com.esmertec.provider.Memo;
 
@@ -100,8 +95,6 @@ public class MemoList extends ListActivity {
 
 	private Cursor cursor;
 
-	private static final String[] PROJECTION = { Memo.Memos._ID,
-			Memo.Memos.ACTIVITY, Memo.Memos.TIME, };
 
 	@Override
 	protected void onDestroy() {

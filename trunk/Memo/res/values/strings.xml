@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Memo</string>
-    <string name="title_memo_edit">Edit Memo</string>
-    <string name="resolve_memo_edit">Edit Memo</string>
     
-    <string name="choose_location">Choose a Location</string>
-    <string name="set_time">Set Time</string>
-    <string name="choose_time">Choose Time</string>
-    <string name="edit_tag">Tag</string>
-    <string name="edit_desc">Description</string>
+    <string name="title_memo_list">Memo List</string>
+    <string name="title_memo_editor">Edit Memo</string>
+    <string name="label_memo_edit_intent">Edit Memo</string>
+    
+    <string name="button_label_set_location">Set Location</string>
+    <string name="button_label_set_time">Set Time</string>
+    <string name="button_label_save_memo">Save Memo</string>
+
+    <string name="edit_activity">Activity</string>
+    <string name="edit_description">Description</string>
     <string name="edit_contact">Contacts</string>
+    
     <string name="menu_add_memo">Add a Memo</string>
 </resources>

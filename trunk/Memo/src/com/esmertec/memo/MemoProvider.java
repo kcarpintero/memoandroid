@@ -217,6 +217,7 @@ public class MemoProvider extends ContentProvider {
 		URI_MATCHER.addURI("com.esmertec.provider.Memo", "memos/#", MEMO_ID);
 
 		MEMO_LIST_PROJECTION_MAP = new HashMap<String, String>();
+		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos._ID, "_id");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.ACTIVITY, "activity");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.DESCRIPTION, "description");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CONTACT, "contact");

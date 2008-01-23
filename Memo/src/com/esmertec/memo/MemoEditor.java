@@ -131,6 +131,8 @@ public class MemoEditor extends Activity {
 		changeLocation.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View arg0) {
+
+
 				Intent mapViewIntent = new Intent(MemoEditor.this,
 						BrowseMap.class);
 				startSubActivity(mapViewIntent, 0);

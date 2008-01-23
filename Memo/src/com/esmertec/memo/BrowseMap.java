@@ -1,8 +1,11 @@
 package com.esmertec.memo;
 
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -22,12 +25,17 @@ public class BrowseMap extends MapActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mMapView = new MapView(this);
+        
+		LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+		Location l = lm.getCurrentLocation("gps");
 
-        // Use Yahoo Geo code to find the lat/long.
-        // Click on the Sample Request URL here for example
-        // http://developer.yahoo.com/maps/rest/V1/geocode.html
-        Point p = new Point((int) (37.416402 * 1000000), (int)
-                (-122.025078 * 1000000));
+		Point p = new Point((int) (l.getLatitude() * 1000000), (int)
+                (l.getLongitude() * 1000000));
+//        // Use Yahoo Geo code to find the lat/long.
+//        // Click on the Sample Request URL here for example
+//        // http://developer.yahoo.com/maps/rest/V1/geocode.html
+//        Point p = new Point((int) (37.416402 * 1000000), (int)
+//                (-122.025078 * 1000000));
         MapController mc = mMapView.getController();
         mc.animateTo(p);
         mc.zoomTo(9);

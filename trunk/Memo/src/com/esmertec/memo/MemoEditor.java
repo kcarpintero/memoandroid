@@ -147,6 +147,8 @@ public class MemoEditor extends Activity {
 
 			public void onClick(View arg0) {
 				pushData();
+				mCursor.deactivate();
+				mCursor = null;
 				finish();
 			}
 
@@ -173,6 +175,7 @@ public class MemoEditor extends Activity {
 		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, mEditDesc.getText().toString());
 		mCursor.updateLong(Constants.ALL_COLUMN_TIME, mCalendar.getTimeInMillis());
 		mCursor.commitUpdates();
+		mCursor.requery();
 	}
 	
 

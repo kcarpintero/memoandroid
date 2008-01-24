@@ -12,7 +12,8 @@
 
 		<AutoCompleteTextView id="@+id/edit_tag"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:completionThreshold="1">
 		</AutoCompleteTextView>
 	</LinearLayout>
 
@@ -26,7 +27,8 @@
 
 		<AutoCompleteTextView id="@+id/edit_contact"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:completionThreshold="1">
 		</AutoCompleteTextView>
 	</LinearLayout>
 

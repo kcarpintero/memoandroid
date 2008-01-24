@@ -13,5 +13,8 @@ public class Constants {
 	public static final int ALL_COLUMN_LOCATION = 3;
 	public static final int ALL_COLUMN_DESCRIPTION = 4;
 	public static final int ALL_COLUMN_TIME = 5;
+	
+	public static final String PREF_LOCATION_LABEL = "LOCATION_LABEL";
+	public static final String PREF_LOCATION_TEXT = "LOCATION_TEXT";
 
 }

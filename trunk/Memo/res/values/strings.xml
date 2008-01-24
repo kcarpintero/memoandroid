@@ -4,6 +4,8 @@
     
     <string name="title_memo_list">Memo List</string>
     <string name="title_memo_editor">Edit Memo</string>
+    <string name="title_save_location">Label for the location</string>
+    
     <string name="label_memo_edit_intent">Edit Memo</string>
     
     <string name="button_label_set_location">Set Location</string>

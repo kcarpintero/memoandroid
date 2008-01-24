@@ -1,50 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.esmertec.memo">
+	package="com.esmertec.memo">
+	
+	<uses-permission id="android.permission.READ_CONTACTS" />
 
-                
-    <application android:icon="@drawable/icon">
-    
-        <provider class="MemoProvider"
-                android:authorities="com.esmertec.provider.Memo" />
-    
-        <activity class="MemoList" android:label="@string/app_name">
-            <intent-filter>
-                <action android:value="android.intent.action.MAIN" />
-                <category android:value="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <intent-filter>
-                <action android:value="android.intent.action.VIEW" />
-                <action android:value="android.intent.action.EDIT" />
-                <action android:value="android.intent.action.PICK" />
-                <category android:value="android.intent.category.DEFAULT" />
-                <type android:value="vnd.esmertec.cursor.dir/memo" />
-            </intent-filter>
-            <intent-filter>
-                <action android:value="android.intent.action.GET_CONTENT" />
-                <category android:value="android.intent.category.DEFAULT" />
-                <type android:value="vnd.esmertec.cursor.item/memo" />
-            </intent-filter>
-        </activity>
-        
-        <activity class="MemoEditor" android:label="@string/title_memo_editor">
-            <intent-filter android:label="@string/label_memo_edit_intent">
-                <action android:value="android.intent.action.VIEW" />
-                <action android:value="android.intent.action.EDIT" />
-                <action android:value="com.esmertec.memos.action.EDIT_MEMO" />
-                <category android:value="android.intent.category.DEFAULT" />
-                <category android:value="android.intent.category.SELECTED_ALTERNATIVE" />
-                <type android:value="vnd.esmertec.cursor.item/memo" />
-            </intent-filter>
-            <intent-filter>
-                <action android:value="android.intent.action.INSERT" />
-                <category android:value="android.intent.category.DEFAULT" />
-                <type android:value="vnd.esmertec.cursor.dir/memo" />
-            </intent-filter>
-        </activity>
-                
-        <activity class="BrowseMap"/> 
-        
+	<application android:icon="@drawable/icon">
 
-    </application>
-</manifest> 
+		<provider class="MemoProvider"
+			android:authorities="com.esmertec.provider.Memo" />
+
+		<activity class="MemoList" android:label="@string/app_name">
+			<intent-filter>
+				<action android:value="android.intent.action.MAIN" />
+				<category
+					android:value="android.intent.category.LAUNCHER" />
+			</intent-filter>
+			<intent-filter>
+				<action android:value="android.intent.action.VIEW" />
+				<action android:value="android.intent.action.EDIT" />
+				<action android:value="android.intent.action.PICK" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<type android:value="vnd.esmertec.cursor.dir/memo" />
+			</intent-filter>
+			<intent-filter>
+				<action
+					android:value="android.intent.action.GET_CONTENT" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
+			</intent-filter>
+		</activity>
+
+		<activity class="MemoEditor"
+			android:label="@string/title_memo_editor">
+			<intent-filter
+				android:label="@string/label_memo_edit_intent">
+				<action android:value="android.intent.action.VIEW" />
+				<action android:value="android.intent.action.EDIT" />
+				<action
+					android:value="com.esmertec.memos.action.EDIT_MEMO" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<category
+					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
+			</intent-filter>
+			<intent-filter>
+				<action android:value="android.intent.action.INSERT" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<type android:value="vnd.esmertec.cursor.dir/memo" />
+			</intent-filter>
+		</activity>
+
+		<activity class="BrowseMap" />
+		<activity class="SaveLocation"
+			android:label="@string/title_save_location"
+			android:theme="@android:style/Theme.Dialog" />
+
+
+	</application>
+</manifest>

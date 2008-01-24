@@ -1,15 +1,14 @@
 package com.esmertec.memo.adapter;
 
-import com.esmertec.memo.Constants;
-import com.esmertec.memo.R;
-import com.esmertec.memo.R.id;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.util.DateFormat;
 import android.view.View;
 import android.widget.ResourceCursorAdapter;
 import android.widget.TextView;
+
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
 
 public class MemoListAdapter extends ResourceCursorAdapter {
 

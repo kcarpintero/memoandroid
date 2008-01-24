@@ -1,16 +1,13 @@
 package com.esmertec.memo.activity;
 
-import com.esmertec.memo.R;
-import com.esmertec.memo.R.id;
-import com.esmertec.memo.R.layout;
-
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.esmertec.memo.R;
 
 public class SaveLocation extends Activity {
 

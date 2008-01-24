@@ -1,4 +1,4 @@
-package com.esmertec.memo;
+package com.esmertec.memo.activity;
 
 import android.app.ListActivity;
 import android.content.Intent;
@@ -12,7 +12,12 @@ import android.view.Menu.Item;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.esmertec.provider.Memo;
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+import com.esmertec.memo.R.layout;
+import com.esmertec.memo.R.string;
+import com.esmertec.memo.adapter.MemoListAdapter;
+import com.esmertec.memo.provider.Memo;
 
 public class MemoList extends ListActivity {
 	

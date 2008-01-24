@@ -1,6 +1,6 @@
 package com.esmertec.memo;
 
-import com.esmertec.provider.Memo;
+import com.esmertec.memo.provider.Memo;
 
 public class Constants {
 

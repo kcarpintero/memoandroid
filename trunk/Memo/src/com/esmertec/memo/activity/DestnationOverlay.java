@@ -1,4 +1,4 @@
-package com.esmertec.memo;
+package com.esmertec.memo.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

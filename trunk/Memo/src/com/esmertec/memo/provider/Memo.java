@@ -1,4 +1,4 @@
-package com.esmertec.provider;
+package com.esmertec.memo.provider;
 
 import android.net.ContentURI;
 import android.provider.BaseColumns;
@@ -9,7 +9,7 @@ public class Memo {
 		public static final String DEFAULT_SORT_ORDER = "modified DESC";//"date * 1440 + time DESC";
 
 		public static final ContentURI CONTENT_URI = ContentURI
-				.create("content://com.esmertec.provider.Memo/memos");
+				.create("content://com.esmertec.memo.provider.Memo/memos");
 
 		public static final String ACTIVITY = "activity";
 		public static final String DESCRIPTION = "description";

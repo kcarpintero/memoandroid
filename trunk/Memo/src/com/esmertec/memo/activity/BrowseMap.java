@@ -1,4 +1,4 @@
-package com.esmertec.memo;
+package com.esmertec.memo.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.SubMenu;
 import android.view.Menu.Item;
 
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+import com.esmertec.memo.R.drawable;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;

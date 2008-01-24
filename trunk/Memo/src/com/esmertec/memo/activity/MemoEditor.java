@@ -1,6 +1,11 @@
-package com.esmertec.memo;
+package com.esmertec.memo.activity;
 
 import java.util.Calendar;
+
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+import com.esmertec.memo.R.id;
+import com.esmertec.memo.R.layout;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;

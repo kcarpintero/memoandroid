@@ -1,4 +1,4 @@
-package com.esmertec.memo;
+package com.esmertec.memo.provider;
 
 import java.util.HashMap;
 
@@ -14,7 +14,6 @@ import android.net.ContentURI;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.esmertec.provider.Memo;
 
 public class MemoProvider extends ContentProvider {
 
@@ -213,8 +212,8 @@ public class MemoProvider extends ContentProvider {
 
 	static {
 		URI_MATCHER = new ContentURIParser(ContentURIParser.NO_MATCH);
-		URI_MATCHER.addURI("com.esmertec.provider.Memo", "memos", MEMOS);
-		URI_MATCHER.addURI("com.esmertec.provider.Memo", "memos/#", MEMO_ID);
+		URI_MATCHER.addURI("com.esmertec.memo.provider.Memo", "memos", MEMOS);
+		URI_MATCHER.addURI("com.esmertec.memo.provider.Memo", "memos/#", MEMO_ID);
 
 		MEMO_LIST_PROJECTION_MAP = new HashMap<String, String>();
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos._ID, "_id");

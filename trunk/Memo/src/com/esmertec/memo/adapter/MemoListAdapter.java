@@ -1,4 +1,8 @@
-package com.esmertec.memo;
+package com.esmertec.memo.adapter;
+
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+import com.esmertec.memo.R.id;
 
 import android.content.Context;
 import android.database.Cursor;

@@ -1,4 +1,8 @@
-package com.esmertec.memo;
+package com.esmertec.memo.activity;
+
+import com.esmertec.memo.R;
+import com.esmertec.memo.R.id;
+import com.esmertec.memo.R.layout;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

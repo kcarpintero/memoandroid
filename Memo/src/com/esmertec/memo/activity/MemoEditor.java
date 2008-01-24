@@ -2,11 +2,6 @@ package com.esmertec.memo.activity;
 
 import java.util.Calendar;
 
-import com.esmertec.memo.Constants;
-import com.esmertec.memo.R;
-import com.esmertec.memo.R.id;
-import com.esmertec.memo.R.layout;
-
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -31,7 +26,11 @@ import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+
 public class MemoEditor extends Activity {
+
 
 	private int mState;
 

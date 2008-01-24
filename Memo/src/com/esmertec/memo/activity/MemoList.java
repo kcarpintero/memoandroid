@@ -14,8 +14,6 @@ import android.widget.ListView;
 
 import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;
-import com.esmertec.memo.R.layout;
-import com.esmertec.memo.R.string;
 import com.esmertec.memo.adapter.MemoListAdapter;
 import com.esmertec.memo.provider.Memo;
 

@@ -60,6 +60,9 @@
 			android:label="@string/title_save_location"
 			android:theme="@android:style/Theme.Dialog" />
 
+		<activity class=".activity.AutoCompleteInputDialog"
+			android:theme="@android:style/Theme.Dialog" />
+
 
 	</application>
 </manifest>

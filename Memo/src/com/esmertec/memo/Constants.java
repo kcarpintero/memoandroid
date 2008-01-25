@@ -1,5 +1,7 @@
 package com.esmertec.memo;
 
+import android.provider.Contacts;
+
 import com.esmertec.memo.provider.Memo;
 
 public class Constants {
@@ -16,5 +18,7 @@ public class Constants {
 	
 	public static final String PREF_LOCATION_LABEL = "LOCATION_LABEL";
 	public static final String PREF_LOCATION_TEXT = "LOCATION_TEXT";
+	
+	public static final String INTENT_AUTOCOMPLETE_ADAPTER = "AUTOCOMPLETE_ADAPTER";
 
 }

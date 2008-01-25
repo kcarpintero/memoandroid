@@ -28,9 +28,9 @@ import android.widget.TimePicker;
 
 import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;
+import com.google.wireless.gdata.data.StringUtils;
 
 public class MemoEditor extends Activity {
-
 
 	private int mState;
 
@@ -40,12 +40,15 @@ public class MemoEditor extends Activity {
 
 	private static final int STATE_EDIT = 1;
 
-	private AutoCompleteTextView mEditActivity;
-	private AutoCompleteTextView mEditContact;
+	// private AutoCompleteTextView mEditActivity;
+//	private AutoCompleteTextView mEditContact;
+
+	private Button mButtonAddTag;
 
 	private EditText mEditDesc;
 
-	private TextView mTextTime, mTextLocation;
+	private TextView mTextTime, mTextLocation, mTextAllTags, mTextAllContacts,
+			mTextDescription;
 
 	private Calendar mCalendar;
 
@@ -116,15 +119,53 @@ public class MemoEditor extends Activity {
 
 		mCalendar = Calendar.getInstance();
 
-		mEditActivity = (AutoCompleteTextView) findViewById(R.id.edit_tag);
+		// mEditActivity = (AutoCompleteTextView) findViewById(R.id.edit_tag);
 
-		mEditContact = (AutoCompleteTextView) findViewById(R.id.edit_contact);
-		ContentResolver content = getContentResolver();
-		Cursor cursor = content.query(Contacts.People.CONTENT_URI,
-				PEOPLE_PROJECTION, null, null,
-				Contacts.People.DEFAULT_SORT_ORDER);
-		ContactListAdapter adapter = new ContactListAdapter(cursor, this);
-		mEditContact.setAdapter(adapter);
+		mTextAllTags = (TextView) findViewById(R.id.txt_all_tags);
+
+		mButtonAddTag = (Button) findViewById(R.id.button_add_tag);
+
+		mButtonAddTag.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MemoEditor.this,
+						AutoCompleteInputDialog.class);
+
+//				ContentResolver content = getContentResolver();
+//				Cursor cursor = content.query(Contacts.People.CONTENT_URI,
+//						PEOPLE_PROJECTION, null, null,
+//						Contacts.People.DEFAULT_SORT_ORDER);
+//				ContactListAdapter adapter = new ContactListAdapter(cursor, MemoEditor.this);
+//				intent.putExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER, adapter);
+				
+				startSubActivity(intent, REQUEST_ADD_TAG);
+			}
+		});
+
+		mTextAllContacts = (TextView) findViewById(R.id.txt_all_contacts);
+		
+		Button Addcontact = (Button) findViewById(R.id.button_add_contact);
+
+		Addcontact.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MemoEditor.this,
+						AutoCompleteInputDialog.class);
+
+				
+				intent.putExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER, AutoCompleteInputDialog.CONTACT_ADAPTER);
+				startSubActivity(intent, REQUEST_ADD_CONTACT);
+			}
+		});
+		
+//		ContentResolver content = getContentResolver();
+//		Cursor cursor = content.query(Contacts.People.CONTENT_URI,
+//				PEOPLE_PROJECTION, null, null,
+//				Contacts.People.DEFAULT_SORT_ORDER);
+//		ContactListAdapter adapter = new ContactListAdapter(cursor, this);
+//		mEditContact.setAdapter(adapter);
 
 		mEditDesc = (EditText) findViewById(R.id.edit_desc);
 		mTextLocation = (TextView) findViewById(R.id.text_location);
@@ -179,9 +220,11 @@ public class MemoEditor extends Activity {
 	}
 
 	private void pullData() {
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
 		mCursor.first();
-		mEditActivity.setText(mCursor, Constants.ALL_COLUMN_ACTIVITY);
-		mEditContact.setText(mCursor, Constants.ALL_COLUMN_CONTACT);
+		mTextAllTags.setText(mCursor, Constants.ALL_COLUMN_ACTIVITY);
+		mTextAllContacts.setText(mCursor, Constants.ALL_COLUMN_CONTACT);
 		mEditDesc.setText(mCursor, Constants.ALL_COLUMN_DESCRIPTION);
 		mTextLocation.setText(mCursor, Constants.ALL_COLUMN_LOCATION);
 		long time = mCursor.getLong(Constants.ALL_COLUMN_TIME);
@@ -194,10 +237,10 @@ public class MemoEditor extends Activity {
 
 	private void pushData() {
 		mCursor.first();
-		mCursor.updateString(Constants.ALL_COLUMN_ACTIVITY, mEditActivity
-				.getText().toString());
-		mCursor.updateString(Constants.ALL_COLUMN_CONTACT, mEditContact
-				.getText().toString());
+		// mCursor.updateString(Constants.ALL_COLUMN_ACTIVITY, mEditActivity
+		// .getText().toString());
+//		mCursor.updateString(Constants.ALL_COLUMN_CONTACT, mEditContact
+//				.getText().toString());
 		mCursor.updateString(Constants.ALL_COLUMN_LOCATION, mTextLocation
 				.getText().toString());
 		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, mEditDesc
@@ -264,16 +307,123 @@ public class MemoEditor extends Activity {
 
 	private static final String TAG = "memoeditor";
 
+	static final int REQUEST_ADD_TAG = 1;
+	static final int REQUEST_ADD_CONTACT = 2;
+	static final int REQUEST_SET_LOCATION = 3;
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			String data, Bundle extras) {
 		if (resultCode == RESULT_OK) {
-			// mTextLocation.setText(data.subSequence(0, data.indexOf("@")));
-			mTextLocation.setText(data);
-			mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION,
-					null, null);
-			pushData();
+			switch (requestCode) {
+			case REQUEST_ADD_TAG:
+				addTag(data);
+				break;
+			case REQUEST_ADD_CONTACT:
+				addContact(data);
+				break;
+			case REQUEST_SET_LOCATION:
+				setLocation(data);
+				break;
+			}
 		}
+		//		
+		//		
+		//		
+		//		
+		// if (resultCode == RESULT_OK) {
+		// // mTextLocation.setText(data.subSequence(0, data.indexOf("@")));
+		// mTextLocation.setText(data);
+		// mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION,
+		// null, null);
+		// pushData();
+		// }
+	}
+
+	private void setLocation(String newLocation) {
+		if (StringUtils.isEmpty(newLocation)) {
+			return;
+		}
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
+		mCursor.first();
+		mCursor.updateString(Constants.ALL_COLUMN_LOCATION, newLocation);
+		managedCommitUpdates(mCursor);
+	}
+
+	private void setDescription(String newDescription) {
+
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
+		mCursor.first();
+		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, newDescription);
+		managedCommitUpdates(mCursor);
+	}
+
+	private void setTime(long newTime) {
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
+		mCursor.first();
+		mCursor.updateLong(Constants.ALL_COLUMN_TIME, newTime);
+		managedCommitUpdates(mCursor);
+	}
+
+	private void addContact(String newContact) {
+		if (StringUtils.isEmpty(newContact)){
+			return;
+		}
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
+		mCursor.first();
+		String all_contacts = mCursor.getString(Constants.ALL_COLUMN_CONTACT);
+
+		if (StringUtils.isEmpty(all_contacts)) {
+			all_contacts = newContact;
+		} else {
+			String[] contacts = all_contacts.split(",");
+			all_contacts = newContact;
+			if (contacts != null) {
+				for (String contact : contacts) {
+					if (contact.equals(newContact)) {
+						continue;
+					}
+					all_contacts += "," + contact;
+				}
+			}
+		}
+
+		mCursor.updateString(Constants.ALL_COLUMN_CONTACT, all_contacts);
+		managedCommitUpdates(mCursor);
+
+	}
+
+	private void addTag(String newTag) {
+		if (StringUtils.isEmpty(newTag)){
+			return;
+		}
+		
+		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
+				null);
+		mCursor.first();
+		String all_tags = mCursor.getString(Constants.ALL_COLUMN_ACTIVITY);
+
+		if (StringUtils.isEmpty(all_tags)) {
+			all_tags = newTag;
+		} else {
+			String[] tags = all_tags.split(",");
+			all_tags = newTag;
+			if (tags != null) {
+				for (String tag : tags) {
+					if (tag.equals(newTag)) {
+						continue;
+					}
+					all_tags += "," + tag;
+				}
+			}
+		}
+
+		mCursor.updateString(Constants.ALL_COLUMN_ACTIVITY, all_tags);
+		managedCommitUpdates(mCursor);
 	}
 
 	// Copied from ApiDemos AutoComplete4.java
@@ -324,7 +474,7 @@ public class MemoEditor extends Activity {
 		private ContentResolver mContent;
 	}
 
-	private static final String[] PEOPLE_PROJECTION = new String[] {
+	static final String[] PEOPLE_PROJECTION = new String[] {
 			Contacts.People._ID, Contacts.People.PREFERRED_PHONE_ID,
 			Contacts.People.TYPE, Contacts.People.NUMBER,
 			Contacts.People.LABEL, Contacts.People.NAME,

@@ -109,7 +109,7 @@ public class MemoEditor extends Activity {
 			return;
 		}
 
-		setContentView(R.layout.edit_memo_layout);
+		setContentView(R.layout.memo_editor);
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();

@@ -49,6 +49,7 @@ public class AutoCompleteInputDialog extends Activity {
 				mAutoCompleteTxt.setAdapter(adapter);
 			}
 		}
+		
 
 		mButtonSave = (Button) findViewById(R.id.button_save_auto_complete_txt);
 		mButtonSave.setOnClickListener(new OnClickListener() {

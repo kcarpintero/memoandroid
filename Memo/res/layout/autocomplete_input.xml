@@ -23,6 +23,12 @@
 	<TextView id="@+id/label" android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:text="Type here:" />
 
+	<ListView id="@id/android:list" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
+	<TextView id="@id/android:empty" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+
 	<AutoCompleteTextView id="@+id/auto_complete_txt"
 		android:maxLines="1" android:layout_marginTop="2dip"
 		android:layout_width="fill_parent" android:ems="25"

@@ -16,5 +16,12 @@
     <string name="edit_description">Description</string>
     <string name="edit_contact">Contacts</string>
     
+    <string name="button_hint_default">Use the buttons below to change the info</string>
+    <string name="button_hint_change_title">Change the title</string>
+    <string name="button_hint_change_time">Change the time</string>
+    <string name="button_hint_change_contacts">Change the contacts</string>
+    <string name="button_hint_change_location">Change the location</string>
+    <string name="button_hint_change_tags">Change the tags</string>
+    
     <string name="menu_add_memo">Add a Memo</string>
 </resources>

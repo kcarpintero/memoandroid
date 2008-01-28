@@ -9,7 +9,7 @@ public class Memo {
 		public static final String DEFAULT_SORT_ORDER = "modified DESC";//"date * 1440 + time DESC";
 
 		public static final ContentURI CONTENT_URI = ContentURI
-				.create("content://com.esmertec.memo.provider.Memo/memos");
+				.create("content://com.esmertec.memo/memos");
 
 		public static final String ACTIVITY = "activity";
 		public static final String DESCRIPTION = "description";

@@ -7,7 +7,7 @@
 	<application android:icon="@drawable/icon">
 
 		<provider class=".provider.MemoProvider"
-			android:authorities="com.esmertec.memo.provider.Memo" />
+			android:authorities="com.esmertec.memo" />
 
 		<activity class=".activity.MemoList"
 			android:label="@string/app_name">

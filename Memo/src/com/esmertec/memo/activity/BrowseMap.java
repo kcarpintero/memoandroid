@@ -291,7 +291,8 @@ public class BrowseMap extends MapActivity {
 		if (intent != null) {
 			String loca_txt = (String) intent
 					.getExtra(Constants.PREF_LOCATION_TEXT);
-			str = loca_txt.split("@")[0];
+			if (!StringUtils.isEmpty(loca_txt))
+				str = loca_txt.split("@")[0];
 		}
 		if (StringUtils.isEmpty(str)) {
 			str = "Destnation";

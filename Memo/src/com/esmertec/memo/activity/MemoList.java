@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu.Item;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 
 import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;
@@ -89,6 +90,7 @@ public class MemoList extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 		ContentURI uri = getIntent().getData().addId(cursor.getLong(0));
 		Intent intent = new Intent(Intent.EDIT_ACTION, uri);
+		Log.v("qinyu","has default category:" + intent.hasCategory(Intent.DEFAULT_CATEGORY));
 		startActivity(intent);
 	}
 

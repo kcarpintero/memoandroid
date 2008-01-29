@@ -62,6 +62,21 @@
 
 		<activity class=".activity.AutoCompleteInputDialog"
 			android:theme="@android:style/Theme.Dialog" />
+		<activity class=".activity.TimeSetter"
+		android:label="Set the time"
+android:theme="@android:style/Theme.Dialog">
+			<intent-filter
+				android:label="Set time">
+				<action
+					android:value="com.esmertec.memos.action.SET_TIME" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<category
+					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
+				<type android:value="vnd.esmertec.cursor.dir/memo" />
+			</intent-filter>
+		</activity>
 
 
 	</application>

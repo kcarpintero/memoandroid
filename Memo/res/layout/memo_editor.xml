@@ -3,116 +3,120 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent" android:paddingLeft="5px"
 	android:paddingRight="5px">
-
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="42px" android:paddingTop="5px">
-
-		<ImageView id="@+id/img_tag" android:src="@drawable/activity"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginRight="5px" />
-
-		<Button id="@+id/button_add_tag"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Add"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true" />
-
-		<TextView id="@+id/txt_all_tags"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_toRight="@id/img_tag"
-			android:layout_toLeft="@id/button_add_tag"
-			android:layout_centerVertical="true" android:layout_weight="1"
-			android:focusable="true" android:maxLines="1"
-			android:scrollHorizontally="true" android:layout_marginRight="5px" />
-	</RelativeLayout>
-
-
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="42px" android:paddingTop="5px">
-
-		<ImageView id="@+id/img_contact"
-			android:src="@drawable/contacts" android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginRight="5px" />
-
-		<Button id="@+id/button_add_contact"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:text="Add"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true" />
-
-		<TextView id="@+id/txt_all_contacts"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_toRight="@id/img_contact"
-			android:layout_toLeft="@id/button_add_contact"
-			android:layout_centerVertical="true" android:layout_weight="1"
-			android:singleLine="true" android:layout_marginRight="5px" />
-	</RelativeLayout>
 	<!--
+		<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="42px" android:paddingTop="5px">
+		
+		<ImageView id="@+id/img_tag" android:src="@drawable/activity"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="5px" />
+		
+		<Button id="@+id/button_add_tag"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Add"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true" />
+		
+		<TextView id="@+id/txt_all_tags"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRight="@id/img_tag"
+		android:layout_toLeft="@id/button_add_tag"
+		android:layout_centerVertical="true" android:layout_weight="1"
+		android:focusable="true" android:maxLines="1"
+		android:scrollHorizontally="true" android:layout_marginRight="5px" />
+		</RelativeLayout>
+		
+		
+		<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="42px" android:paddingTop="5px">
+		
+		<ImageView id="@+id/img_contact"
+		android:src="@drawable/contacts" android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginRight="5px" />
+		
+		<Button id="@+id/button_add_contact"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:text="Add"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true" />
+		
+		<TextView id="@+id/txt_all_contacts"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_toRight="@id/img_contact"
+		android:layout_toLeft="@id/button_add_contact"
+		android:layout_centerVertical="true" android:layout_weight="1"
+		android:singleLine="true" android:layout_marginRight="5px" />
+		</RelativeLayout>
+		
+		<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1">
+		
+		<TextView android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/edit_description" />
+		
+		<EditText id="@+id/edit_desc" android:layout_width="fill_parent"
+		android:layout_height="fill_parent">
+		</EditText>
+		</LinearLayout>
+		
 		<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:padding="5px">
-		<ImageView android:src="@drawable/contacts"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content" />
-		
-		<TextView android:layout_width="wrap_content
+		android:layout_height="wrap_content">
+		<TextView id="@+id/text_time" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1" />
+		<Button id="@+id/set_time" android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="@string/edit_contact" />
+		android:text="@string/button_label_set_time">
+		</Button>
+		</LinearLayout>
 		
 		
-		<AutoCompleteTextView id="@+id/edit_contact"
+		<LinearLayout android:orientation="horizontal"
 		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<TextView id="@+id/text_location"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:layout_weight="1" />
+		<Button id="@+id/set_location"
+		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:completionThreshold="1">
-		</AutoCompleteTextView>
+		android:text="@string/button_label_set_location">
+		</Button>
 		</LinearLayout>
 	-->
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:layout_weight="1">
+		android:layout_height="wrap_content" android:scrollbars="vertical"
+		android:padding="5px">
 
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/edit_description" />
-
-		<EditText id="@+id/edit_desc" android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
-		</EditText>
-	</LinearLayout>
-
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<TextView id="@+id/text_time" android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1" />
-		<Button id="@+id/set_time" android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/button_label_set_time">
-		</Button>
-	</LinearLayout>
-
-
-	<LinearLayout android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-		<TextView id="@+id/text_location"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content" android:layout_weight="1" />
-		<Button id="@+id/set_location"
+		<TextView id="@+id/text_memo_title"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/button_label_set_location">
-		</Button>
-	</LinearLayout>
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:hint="Someting to do" android:hintTextColor="#000000" />
+		<TextView id="@+id/text_memo_time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:hint="At some time" />
+		<TextView id="@+id/text_memo_contacts"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:hint="With some body" />
+		<TextView id="@+id/text_memo_location"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:hint="At some where" />
+		<TextView id="@+id/text_memo_tags"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:hint="Tags..." />
 
-	<Button id="@+id/save_memo" android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:text="@string/button_label_save_memo">
-	</Button>
+	</LinearLayout>
 
 	<LinearLayout android:orientation="vertical"
 		android:layout_width="fill_parent"
@@ -120,28 +124,27 @@
 
 		<TextView id="@+id/text_button_hint"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:textAlign="center" 
-			android:text="@string/button_hint_default"/>
+			android:layout_height="wrap_content" android:textAlign="center"
+			android:text="@string/button_hint_default" />
 		<LinearLayout android:orientation="horizontal"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal">
 
-			<ImageButton android:src="@drawable/title"
-				android:layout_width="wrap_content"
+			<ImageButton id="@+id/button_edit_title"
+				android:src="@drawable/title" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton android:src="@drawable/time"
-				android:layout_width="wrap_content"
+			<ImageButton id="@+id/button_set_time"
+				android:src="@drawable/time" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton android:src="@drawable/contacts"
-				android:layout_width="wrap_content"
+			<ImageButton id="@+id/button_edit_contacts"
+				android:src="@drawable/contacts" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton android:src="@drawable/location"
-				android:layout_width="wrap_content"
+			<ImageButton id="@+id/button_set_location"
+				android:src="@drawable/location" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton android:src="@drawable/tags"
-				android:layout_width="wrap_content"
+			<ImageButton id="@+id/button_edit_tags"
+				android:src="@drawable/tags" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
 
 		</LinearLayout>

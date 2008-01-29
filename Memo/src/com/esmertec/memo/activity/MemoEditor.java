@@ -23,11 +23,13 @@ import android.widget.CursorAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;
+import com.esmertec.memo.provider.MemoProvider;
 import com.google.wireless.gdata.data.StringUtils;
 
 public class MemoEditor extends Activity {
@@ -41,7 +43,7 @@ public class MemoEditor extends Activity {
 	private static final int STATE_EDIT = 1;
 
 	// private AutoCompleteTextView mEditActivity;
-//	private AutoCompleteTextView mEditContact;
+	// private AutoCompleteTextView mEditContact;
 
 	private Button mButtonAddTag;
 
@@ -110,87 +112,27 @@ public class MemoEditor extends Activity {
 		}
 
 		setContentView(R.layout.memo_editor);
+
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();
-		Log.v("qinyu", mURI.toString());
-		Log.v("qinyu", mCursor.toString());
-		Log.v("qinyu", mCursor.getString(Constants.ALL_COLUMN_ACTIVITY));
 
-		mCalendar = Calendar.getInstance();
+		ImageButton ib = (ImageButton) findViewById(R.id.button_set_time);
 
-		// mEditActivity = (AutoCompleteTextView) findViewById(R.id.edit_tag);
-
-		mTextAllTags = (TextView) findViewById(R.id.txt_all_tags);
-
-		mButtonAddTag = (Button) findViewById(R.id.button_add_tag);
-
-		mButtonAddTag.setOnClickListener(new OnClickListener() {
+		ib.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MemoEditor.this,
-						AutoCompleteInputDialog.class);
-
-//				ContentResolver content = getContentResolver();
-//				Cursor cursor = content.query(Contacts.People.CONTENT_URI,
-//						PEOPLE_PROJECTION, null, null,
-//						Contacts.People.DEFAULT_SORT_ORDER);
-//				ContactListAdapter adapter = new ContactListAdapter(cursor, MemoEditor.this);
-//				intent.putExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER, adapter);
-				
-				startSubActivity(intent, REQUEST_ADD_TAG);
+				Intent intent = new Intent(MemoProvider.ACTION_SET_TIME, mURI);
+				startActivity(intent);
 			}
 		});
 
-		mTextAllContacts = (TextView) findViewById(R.id.txt_all_contacts);
-		
-		Button Addcontact = (Button) findViewById(R.id.button_add_contact);
-
-		Addcontact.setOnClickListener(new OnClickListener() {
+		ib = (ImageButton) findViewById(R.id.button_set_location);
+		ib.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(MemoEditor.this,
-						AutoCompleteInputDialog.class);
-
-				
-				intent.putExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER, AutoCompleteInputDialog.CONTACT_ADAPTER);
-				startSubActivity(intent, REQUEST_ADD_CONTACT);
-			}
-		});
-		
-//		ContentResolver content = getContentResolver();
-//		Cursor cursor = content.query(Contacts.People.CONTENT_URI,
-//				PEOPLE_PROJECTION, null, null,
-//				Contacts.People.DEFAULT_SORT_ORDER);
-//		ContactListAdapter adapter = new ContactListAdapter(cursor, this);
-//		mEditContact.setAdapter(adapter);
-
-		mEditDesc = (EditText) findViewById(R.id.edit_desc);
-		mTextLocation = (TextView) findViewById(R.id.text_location);
-		mTextTime = (TextView) findViewById(R.id.text_time);
-
-		pullData();
-
-		Button changeDate = (Button) findViewById(R.id.set_time);
-		changeDate.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View arg0) {
-				Calendar cal = Calendar.getInstance();
-				new DatePickerDialog(MemoEditor.this, mDateSetListener, cal
-						.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal
-						.get(Calendar.DAY_OF_MONTH), Calendar.SUNDAY).show();
-			}
-
-		});
-
-		Button changeLocation = (Button) findViewById(R.id.set_location);
-
-		changeLocation.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View arg0) {
-
 				Intent mapViewIntent = new Intent(MemoEditor.this,
 						BrowseMap.class);
 				String loc_txt = mCursor
@@ -200,23 +142,95 @@ public class MemoEditor extends Activity {
 							loc_txt);
 				}
 				startSubActivity(mapViewIntent, 0);
-
 			}
-
 		});
 
-		Button saveMemo = (Button) findViewById(R.id.save_memo);
+		Log.v("qinyu", mURI.toString());
+		Log.v("qinyu", mCursor.toString());
+		Log.v("qinyu", mCursor.getString(Constants.ALL_COLUMN_ACTIVITY));
 
-		saveMemo.setOnClickListener(new OnClickListener() {
+		mCalendar = Calendar.getInstance();
 
-			public void onClick(View arg0) {
-				pushData();
-				mCursor.deactivate();
-				mCursor = null;
-				finish();
-			}
+		// mEditActivity = (AutoCompleteTextView) findViewById(R.id.edit_tag);
 
-		});
+		// mTextAllTags = (TextView) findViewById(R.id.txt_all_tags);
+		//
+		// mButtonAddTag = (Button) findViewById(R.id.button_add_tag);
+		//
+		// mButtonAddTag.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// Intent intent = new Intent(MemoEditor.this,
+		// AutoCompleteInputDialog.class);
+		//				
+		// startSubActivity(intent, REQUEST_ADD_TAG);
+		// }
+		// });
+		//
+		// mTextAllContacts = (TextView) findViewById(R.id.txt_all_contacts);
+		//		
+		// Button Addcontact = (Button) findViewById(R.id.button_add_contact);
+		//
+		// Addcontact.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View arg0) {
+		// Intent intent = new Intent(MemoEditor.this,
+		// AutoCompleteInputDialog.class);
+		//
+		//				
+		// intent.putExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER,
+		// AutoCompleteInputDialog.CONTACT_ADAPTER);
+		// startSubActivity(intent, REQUEST_ADD_CONTACT);
+		// }
+		// });
+		//		
+		// // ContentResolver content = getContentResolver();
+		// // Cursor cursor = content.query(Contacts.People.CONTENT_URI,
+		// // PEOPLE_PROJECTION, null, null,
+		// // Contacts.People.DEFAULT_SORT_ORDER);
+		// // ContactListAdapter adapter = new ContactListAdapter(cursor, this);
+		// // mEditContact.setAdapter(adapter);
+		//
+		// mEditDesc = (EditText) findViewById(R.id.edit_desc);
+		// mTextLocation = (TextView) findViewById(R.id.text_location);
+		// mTextTime = (TextView) findViewById(R.id.text_time);
+		//
+		// pullData();
+		//
+		// Button changeDate = (Button) findViewById(R.id.set_time);
+		// changeDate.setOnClickListener(new OnClickListener() {
+		//
+		// public void onClick(View arg0) {
+		// Calendar cal = Calendar.getInstance();
+		// new DatePickerDialog(MemoEditor.this, mDateSetListener, cal
+		// .get(Calendar.YEAR), cal.get(Calendar.MONTH), cal
+		// .get(Calendar.DAY_OF_MONTH), Calendar.SUNDAY).show();
+		// }
+		//
+		// });
+		//
+		// Button changeLocation = (Button) findViewById(R.id.set_location);
+		//
+		// changeLocation.setOnClickListener(new OnClickListener() {
+		//
+		// public void onClick(View arg0) {
+		//
+		// Intent mapViewIntent = new Intent(MemoEditor.this,
+		// BrowseMap.class);
+		// String loc_txt = mCursor
+		// .getString(Constants.ALL_COLUMN_LOCATION);
+		// if (loc_txt.indexOf("@") >= 0) {
+		// mapViewIntent.putExtra(Constants.PREF_LOCATION_TEXT,
+		// loc_txt);
+		// }
+		// startSubActivity(mapViewIntent, 0);
+		//
+		// }
+		//
+		// });
+
 	}
 
 	private void pullData() {
@@ -239,8 +253,8 @@ public class MemoEditor extends Activity {
 		mCursor.first();
 		// mCursor.updateString(Constants.ALL_COLUMN_ACTIVITY, mEditActivity
 		// .getText().toString());
-//		mCursor.updateString(Constants.ALL_COLUMN_CONTACT, mEditContact
-//				.getText().toString());
+		// mCursor.updateString(Constants.ALL_COLUMN_CONTACT, mEditContact
+		// .getText().toString());
 		mCursor.updateString(Constants.ALL_COLUMN_LOCATION, mTextLocation
 				.getText().toString());
 		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, mEditDesc
@@ -268,7 +282,7 @@ public class MemoEditor extends Activity {
 		if (mCursor == null) {
 			return;
 		}
-		pushData();
+		// pushData();
 	}
 
 	@Override
@@ -284,7 +298,7 @@ public class MemoEditor extends Activity {
 		if (mCursor == null) {
 			return;
 		}
-		pullData();
+		// pullData();
 	}
 
 	@Override
@@ -369,7 +383,7 @@ public class MemoEditor extends Activity {
 	}
 
 	private void addContact(String newContact) {
-		if (StringUtils.isEmpty(newContact)){
+		if (StringUtils.isEmpty(newContact)) {
 			return;
 		}
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
@@ -398,10 +412,10 @@ public class MemoEditor extends Activity {
 	}
 
 	private void addTag(String newTag) {
-		if (StringUtils.isEmpty(newTag)){
+		if (StringUtils.isEmpty(newTag)) {
 			return;
 		}
-		
+
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();
@@ -480,4 +494,16 @@ public class MemoEditor extends Activity {
 			Contacts.People.LABEL, Contacts.People.NAME,
 			Contacts.People.COMPANY };
 
+	private void fillData() {
+		TextView txtView = (TextView) findViewById(R.id.text_memo_title);
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView = (TextView) findViewById(R.id.text_memo_time);
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView = (TextView) findViewById(R.id.text_memo_title);
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView = (TextView) findViewById(R.id.text_memo_title);
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView = (TextView) findViewById(R.id.text_memo_title);
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+	}
 }

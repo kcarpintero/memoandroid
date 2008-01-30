@@ -133,15 +133,27 @@ public class MemoEditor extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent mapViewIntent = new Intent(MemoEditor.this,
-						BrowseMap.class);
-				String loc_txt = mCursor
-						.getString(Constants.ALL_COLUMN_LOCATION);
-				if (loc_txt.indexOf("@") >= 0) {
-					mapViewIntent.putExtra(Constants.PREF_LOCATION_TEXT,
-							loc_txt);
-				}
-				startSubActivity(mapViewIntent, 0);
+//				Intent mapViewIntent = new Intent(MemoEditor.this,
+//						MapBrowser.class);
+//				String loc_txt = mCursor
+//						.getString(Constants.ALL_COLUMN_LOCATION);
+//				if (loc_txt.indexOf("@") >= 0) {
+//					mapViewIntent.putExtra(Constants.PREF_LOCATION_TEXT,
+//							loc_txt);
+//				}
+//				startSubActivity(mapViewIntent, 0);
+				Intent intent = new Intent(MemoProvider.ACTION_SET_LOCATION, mURI);
+				startActivity(intent);
+			}
+		});
+
+		ib = (ImageButton) findViewById(R.id.button_edit_contacts);
+		ib.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MemoProvider.ACTION_EDIT_CONTACTS, mURI);
+				startActivity(intent);
 			}
 		});
 

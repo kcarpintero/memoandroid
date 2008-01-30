@@ -55,7 +55,20 @@
 			</intent-filter>
 		</activity>
 
-		<activity class=".activity.BrowseMap" />
+		<activity class=".activity.MapBrowser">
+			<intent-filter android:label="Set Location">
+				<action
+					android:value="com.esmertec.memos.action.SET_LOCATION" />
+				<action
+					android:value="com.esmertec.memos.action.VIEW_LOCATION" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<category
+					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
+			</intent-filter>
+		</activity>
+		
 		<activity class=".activity.SaveLocation"
 			android:label="@string/title_save_location"
 			android:theme="@android:style/Theme.Dialog" />
@@ -63,10 +76,9 @@
 		<activity class=".activity.AutoCompleteInputDialog"
 			android:theme="@android:style/Theme.Dialog" />
 		<activity class=".activity.TimeSetter"
-		android:label="Set the time"
-android:theme="@android:style/Theme.Dialog">
-			<intent-filter
-				android:label="Set time">
+			android:label="Set the time"
+			android:theme="@android:style/Theme.Dialog">
+			<intent-filter android:label="Set time">
 				<action
 					android:value="com.esmertec.memos.action.SET_TIME" />
 				<category
@@ -74,7 +86,19 @@ android:theme="@android:style/Theme.Dialog">
 				<category
 					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
 				<type android:value="vnd.esmertec.cursor.item/memo" />
-				<type android:value="vnd.esmertec.cursor.dir/memo" />
+			</intent-filter>
+		</activity>
+		<activity class=".activity.ContactEditor"
+			android:label="Edit the contacts"
+			android:theme="@android:style/Theme.Dialog">
+			<intent-filter android:label="Edit Contacts">
+				<action
+					android:value="com.esmertec.memos.action.EDIT_CONTACTS" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<category
+					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
 			</intent-filter>
 		</activity>
 

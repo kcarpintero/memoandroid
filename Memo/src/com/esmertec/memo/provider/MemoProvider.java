@@ -18,6 +18,8 @@ import android.util.Log;
 public class MemoProvider extends ContentProvider {
 	
 	public static final String ACTION_SET_TIME = "com.esmertec.memos.action.SET_TIME";
+	public static final String ACTION_SET_LOCATION = "com.esmertec.memos.action.SET_LOCATION";
+	public static final String ACTION_EDIT_CONTACTS = "com.esmertec.memos.action.EDIT_CONTACTS";
 
 	private SQLiteDatabase mDB;
 

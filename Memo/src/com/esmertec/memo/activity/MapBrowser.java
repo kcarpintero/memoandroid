@@ -1,9 +1,11 @@
 package com.esmertec.memo.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.ContentURI;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -11,8 +13,9 @@ import android.view.Menu;
 import android.view.SubMenu;
 import android.view.Menu.Item;
 
-import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;
+import com.esmertec.memo.provider.Memo;
+import com.esmertec.memo.provider.MemoProvider;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
@@ -24,71 +27,97 @@ import com.google.googlenav.map.MapPoint;
 import com.google.googlenav.map.Zoom;
 import com.google.wireless.gdata.data.StringUtils;
 
-public class BrowseMap extends MapActivity {
+public class MapBrowser extends MapActivity {
+
+	private int mState;
+
+	private static final int STATE_BROWSE = 0;
+	private static final int STATE_SET_LOCATION = 1;
+
+	private ContentURI mURI;
+
 	private MapView mMapView;
 
-	private String LOG_TAG = "BrowseMap";
+	private DestnationOverlay mDestOverlay;
+
+	private static final String TAG = MapBrowser.class.getName();
 
 	@Override
 	public void onCreate(Bundle icicle) {
+
 		super.onCreate(icicle);
+
 		mMapView = new MapView(this);
 
-		Intent intent = getIntent();
+		mState = STATE_BROWSE;
 
 		Point p = null;
 
-		boolean b = true;
+		Intent intent = getIntent();
 		if (intent != null) {
-			String loca_txt = (String) intent
-					.getExtra(Constants.PREF_LOCATION_TEXT);
-			if (loca_txt != null) {
-				int i = loca_txt.indexOf('@');
-				if (i >= 0) {
+			if (intent.getAction().equals(MemoProvider.ACTION_SET_LOCATION)) {
+				mURI = intent.getData();
+				if (mURI != null) {
+					Cursor cursor = managedQuery(mURI, new String[] {
+							Memo.Memos.LOCATION, Memo.Memos._ID }, null, null);
+					mState = STATE_SET_LOCATION;
+					cursor.first();
+					String str = cursor.getString(0);
+					p = locationStringToPoint(str);
+					mDestOverlay = new DestnationOverlay(p, BitmapFactory
+							.decodeResource(getResources(), R.drawable.dest),
+							this);
+					mMapView.createOverlayController().add(mDestOverlay, true);
 
-					String[] lat_lon = loca_txt.substring(i + 1,
-							loca_txt.length()).split(",");
-					for (String str : lat_lon) {
-						Log.v("qinyu", str);
-					}
-
-					if (lat_lon.length >= 2) {
-						try {
-							double lat = Double.parseDouble(lat_lon[0]);
-							double lon = Double.parseDouble(lat_lon[1]);
-							p = new Point((int) (lat * 1000000),
-									(int) (lon * 1000000));
-							b = false;
-						} catch (Exception e) {
-
-						}
-					}
 				}
 			}
 		}
 
-		if (b) {
-			LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
-			Location l = lm.getCurrentLocation("gps");
-
-			p = new Point((int) (l.getLatitude() * 1000000), (int) (l
-					.getLongitude() * 1000000));
+		if (p == null) {
+			p = currentLocationToPoint();
 		}
-		// // Use Yahoo Geo code to find the lat/long.
-		// // Click on the Sample Request URL here for example
-		// // http://developer.yahoo.com/maps/rest/V1/geocode.html
-		// Point p = new Point((int) (37.416402 * 1000000), (int)
-		// (-122.025078 * 1000000));
+
 		MapController mc = mMapView.getController();
 		mc.animateTo(p);
 		mc.zoomTo(9);
 
-		mMapView.createOverlayController().add(
-				new DestnationOverlay(p, BitmapFactory.decodeResource(
-						getResources(), R.drawable.dest), this), true);
-
 		setContentView(mMapView);
 
+	}
+
+	private Point locationStringToPoint(String loca_txt) {
+		if (StringUtils.isEmpty(loca_txt)) {
+			return null;
+		}
+		int i = loca_txt.indexOf('@');
+		if (i < 0) {
+			return null;
+		}
+
+		String[] lat_lon = loca_txt.substring(i + 1, loca_txt.length()).split(
+				",");
+
+		if (lat_lon.length < 2) {
+			return null;
+		}
+
+		try {
+			int lat = Integer.parseInt(lat_lon[0]);
+			int lon = Integer.parseInt(lat_lon[1]);
+			return new Point((int) (lat), (int) (lon));
+		} catch (Exception e) {
+			return null;
+		}
+
+	}
+
+	private Point currentLocationToPoint() {
+
+		LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+		Location l = lm.getCurrentLocation("gps");
+
+		return new Point((int) (l.getLatitude() * 1000000), (int) (l
+				.getLongitude() * 1000000));
 	}
 
 	private static final int MENU_FIND = 1;
@@ -120,8 +149,10 @@ public class BrowseMap extends MapActivity {
 		subMenuView.add(SubMenu.FIRST, MENU_CONTACT, "Contacts").setShortcut(
 				KeyEvent.KEYCODE_POUND, 0, KeyEvent.KEYCODE_C);
 
-		menu.add(Menu.FIRST, MENU_SAVE_LOCATION, "Save Location").setShortcut(
-				KeyEvent.KEYCODE_5, 0, KeyEvent.KEYCODE_L);
+		if (mState == STATE_SET_LOCATION) {
+			menu.add(Menu.FIRST, MENU_SAVE_LOCATION, "Save Location")
+					.setShortcut(KeyEvent.KEYCODE_5, 0, KeyEvent.KEYCODE_L);
+		}
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -157,8 +188,33 @@ public class BrowseMap extends MapActivity {
 	}
 
 	private void saveLocation() {
-		Intent intent = new Intent(this, SaveLocation.class);
-		startSubActivity(intent, 0);
+		if (mState == STATE_SET_LOCATION) {
+			int lat = mMapView.getMapCenter().getLatitudeE6() ;
+			int lon = mMapView.getMapCenter().getLongitudeE6();
+
+			Cursor cursor = managedQuery(mURI, new String[] {
+					Memo.Memos.LOCATION, Memo.Memos._ID }, null, null);
+
+			cursor.first();
+
+			String label = cursor.getString(0);
+			if (StringUtils.isEmpty(label)) {
+				label = "";
+			} else {
+				label = label.substring(0, label.indexOf('@'));
+			}
+			String label_text = "@" + lat + "," + lon;
+			Log.v(TAG, "Add GEO:" + mMapView.getMapCenter().getLatitudeE6());
+			Log.v(TAG, "Add GEO:" + label_text);
+
+			cursor.updateString(0, label_text);
+			managedCommitUpdates(cursor);
+			cursor.deactivate();
+
+			Intent intent = new Intent(this, SaveLocation.class);
+
+			startSubActivity(intent, 0);
+		}
 
 	}
 
@@ -167,11 +223,35 @@ public class BrowseMap extends MapActivity {
 			String data, Bundle extras) {
 		if (resultCode == RESULT_OK) {
 
-			double lat = mMapView.getMapCenter().getLatitudeE6() / 1000000;
-			double lon = mMapView.getMapCenter().getLongitudeE6() / 1000000;
-			String label_text = data + "@" + lat + "," + lon;
-			setResult(RESULT_OK, label_text);
-			finish();
+			Cursor cursor = managedQuery(mURI, new String[] {
+					Memo.Memos.LOCATION, Memo.Memos._ID }, null, null);
+
+			cursor.first();
+			
+			String label = cursor.getString(0);
+			if (StringUtils.isEmpty(label)) {
+				label = "";
+			} else {
+				label = label.substring(label.indexOf('@'), label.length());
+			}
+
+			String label_text = data + label;
+			
+			Log.v(TAG, "Add label:" + label_text);
+			
+			cursor.updateString(0, label_text);
+			managedCommitUpdates(cursor);
+			cursor.deactivate();
+
+			Point p = locationStringToPoint(label_text);
+
+			mDestOverlay.setDestPoint(p);
+
+			MapController mc = mMapView.getController();
+			mc.animateTo(p);
+
+			// setResult(RESULT_OK, label_text);
+			// finish();
 		}
 	}
 
@@ -245,24 +325,23 @@ public class BrowseMap extends MapActivity {
 			// Wait for the search to complete, Should do this
 			// in another thread ideally, this is just for illustration here.
 			while (!search.isComplete()) {
-				Log.i(LOG_TAG, ".");
+				Log.i(TAG, ".");
 			}
 
 			// Print the details.
-			Log.i(LOG_TAG, "Done - " + search.numPlacemarks());
+			Log.i(TAG, "Done - " + search.numPlacemarks());
 			MapPoint point = null;
 			for (int i = 0; i < search.numPlacemarks(); i++) {
 				Placemark placemark = search.getPlacemark(i);
 				point = placemark.getLocation();
-				Log.i(LOG_TAG, " - i : " + Integer.toString(i));
-				Log.i(LOG_TAG, "- Bubble : " + placemark.getBubbleDescriptor());
+				Log.i(TAG, " - i : " + Integer.toString(i));
+				Log.i(TAG, "- Bubble : " + placemark.getBubbleDescriptor());
+				Log.i(TAG, "- Detail : " + placemark.getDetailsDescriptor());
+				Log.i(TAG, "- Title : " + placemark.getTitle());
 				Log
-						.i(LOG_TAG, "- Detail : "
-								+ placemark.getDetailsDescriptor());
-				Log.i(LOG_TAG, "- Title : " + placemark.getTitle());
-				Log.i(LOG_TAG, "- Location : "
-						+ placemark.getLocation().toString());
-				Log.i(LOG_TAG, "- routable : " + placemark.routableString());
+						.i(TAG, "- Location : "
+								+ placemark.getLocation().toString());
+				Log.i(TAG, "- routable : " + placemark.routableString());
 			}
 
 			// Animate to the last location.
@@ -285,17 +364,21 @@ public class BrowseMap extends MapActivity {
 	}
 
 	public String getDestLabel() {
-		Intent intent = getIntent();
+
+		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.LOCATION,
+				Memo.Memos._ID }, null, null);
+
+		cursor.first();
+
+		String loca_txt = cursor.getString(0);
+		cursor.deactivate();
 
 		String str = null;
-		if (intent != null) {
-			String loca_txt = (String) intent
-					.getExtra(Constants.PREF_LOCATION_TEXT);
-			if (!StringUtils.isEmpty(loca_txt))
-				str = loca_txt.split("@")[0];
+		if (!StringUtils.isEmpty(loca_txt)) {
+			str = loca_txt.split("@")[0];
 		}
 		if (StringUtils.isEmpty(str)) {
-			str = "Destnation";
+			str = "Destination";
 		}
 		return str;
 	}

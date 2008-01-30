@@ -31,7 +31,8 @@
         android:layout_height="wrap_content" 
         android:autoText="true"
         android:capitalize="sentences"
-        android:scrollHorizontally="true" />
+        android:scrollHorizontally="true" 
+        android:hint="You can leave it blank"/>
    		
     <Button id="@+id/button_save_location"
         android:layout_width="wrap_content" 

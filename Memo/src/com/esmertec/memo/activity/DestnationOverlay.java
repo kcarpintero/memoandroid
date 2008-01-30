@@ -14,7 +14,7 @@ public class DestnationOverlay extends Overlay {
 	private Point mPointDest;
 	private Bitmap mBitmap;
 
-	private BrowseMap mMap;
+	private MapBrowser mMap;
 
 	// public DestnationOverlay(Point dest, Bitmap icon) {
 	// mPointDest = dest;
@@ -23,7 +23,7 @@ public class DestnationOverlay extends Overlay {
 
 	private Rect mRectDest;
 
-	public DestnationOverlay(Point dest, Bitmap icon, BrowseMap map) {
+	public DestnationOverlay(Point dest, Bitmap icon, MapBrowser map) {
 		mPointDest = dest;
 		mBitmap = icon;
 		mMap = map;
@@ -32,6 +32,9 @@ public class DestnationOverlay extends Overlay {
 	@Override
 	public void draw(Canvas canvas, PixelCalculator calculator, boolean shadow) {
 		super.draw(canvas, calculator, shadow);
+		if (mPointDest == null){
+			return;
+		}
 		int[] oldcoords = new int[2];
 		calculator.getPointXY(mPointDest, oldcoords);
 		oldcoords[0] -= mBitmap.width() / 2;
@@ -52,6 +55,10 @@ public class DestnationOverlay extends Overlay {
 
 		}
 
+	}
+	
+	public void setDestPoint(Point p){
+		mPointDest = p;
 	}
 
 }

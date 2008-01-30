@@ -24,4 +24,5 @@
     <string name="button_hint_change_tags">Change the tags</string>
     
     <string name="menu_add_memo">Add a Memo</string>
+    <string name="menu_delete_memo">Delete</string>
 </resources>

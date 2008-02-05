@@ -20,9 +20,9 @@ public class TimeSetter extends Activity {
 
 	private ContentURI mURI;
 
-	private DatePicker dp;
+	private DatePicker mDatePicker;
 
-	private TimePicker tp;
+	
 
 	private DatePicker.OnDateSetListener mDateSetListener = new DatePicker.OnDateSetListener() {
 		public void dateSet(DatePicker view, int year, int monthOfYear,
@@ -30,9 +30,7 @@ public class TimeSetter extends Activity {
 			mCalendar.set(Calendar.YEAR, year);
 			mCalendar.set(Calendar.MONTH, monthOfYear);
 			mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-			// dp.clearFocus();
-			// tp.requestFocus();
-			//
+
 			new TimePickerDialog(TimeSetter.this, mTimeSetListener, TimeSetter.this.getTitle().toString(),
 					mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar
 							.get(Calendar.MINUTE), false).show();
@@ -46,19 +44,14 @@ public class TimeSetter extends Activity {
 			mCalendar.set(Calendar.HOUR_OF_DAY, hourOfday);
 			mCalendar.set(Calendar.MINUTE, minute);
 			mCalendar.set(Calendar.SECOND, 0);
+			
 			Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.TIME,
 					Memo.Memos._ID }, null, null);
 			cursor.first();
 			cursor.updateLong(0, mCalendar.getTimeInMillis());
 			cursor.commitUpdates();
 			cursor.deactivate();
-			// tp.clearFocus();
-			// dp.requestFocus();
 			finish();
-			// cursor.first();
-			// do {
-			//
-			// } while (cursor.next());
 		}
 
 	};
@@ -97,16 +90,11 @@ public class TimeSetter extends Activity {
 			mCalendar.setTimeInMillis(time);
 		}
 
-		dp = (DatePicker) findViewById(R.id.datepicker);
-		dp.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
+		mDatePicker = (DatePicker) findViewById(R.id.datepicker);
+		mDatePicker.init(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH),
 				mCalendar.get(Calendar.DAY_OF_MONTH), Calendar.SUNDAY,
 				mDateSetListener);
 
-		// tp = (TimePicker) findViewById(R.id.timepicker);
-		// tp.setCurrentHour(mCalendar.get(Calendar.HOUR_OF_DAY));
-		// tp.setCurrentMinute(mCalendar
-		// .get(Calendar.MINUTE));
-		// tp.setOnTimeFilledIn(mTimeSetListener);
 
 	}
 }

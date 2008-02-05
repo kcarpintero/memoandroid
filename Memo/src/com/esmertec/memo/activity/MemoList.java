@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Menu.Item;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import com.esmertec.memo.Constants;
 import com.esmertec.memo.R;

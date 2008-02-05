@@ -14,17 +14,19 @@ import android.net.ContentURI;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 public class MemoProvider extends ContentProvider {
-	
+
+	private static final String TAG = MemoProvider.class.getName();
+
 	public static final String ACTION_SET_TIME = "com.esmertec.memos.action.SET_TIME";
 	public static final String ACTION_SET_LOCATION = "com.esmertec.memos.action.SET_LOCATION";
 	public static final String ACTION_EDIT_CONTACTS = "com.esmertec.memos.action.EDIT_CONTACTS";
+	public static final String ACTION_EDIT_TITLE = "com.esmertec.memos.action.EDIT_TITLE";
 
 	private SQLiteDatabase mDB;
 
 	private static final String DATABASE_NAME = "memo.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	private static final ContentURIParser URI_MATCHER;
 
@@ -37,20 +39,25 @@ public class MemoProvider extends ContentProvider {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-			try{
+
 			db.execSQL("CREATE TABLE memos (_id INTEGER PRIMARY KEY,"
-					+ "activity TEXT," + "description TEXT," + "contact TEXT,"
-					+ "location TEXT," + "time INTEGER,"
-					+ "created INTEGER," + "modified INTEGER" + ");");
-			}catch (Exception e) {
-				Log.v("qinyu", "Create db " + e.getMessage());
-			}
+					+ "title TEXT," + "contacts TEXT," + "location TEXT,"
+					+ "time INTEGER," + "created INTEGER," + "modified INTEGER"
+					+ ");");
+
+			db.execSQL("CREATE TABLE tags (_id INTEGER PRIMARY KEY,"
+					+ "name TEXT," + "created INTEGER," + "modified INTEGER"
+					+ ");");
 
 		}
 
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
+			Log.w(TAG, "Upgrading database from version " + oldVersion + " to "
+					+ newVersion + ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS memos");
+			db.execSQL("DROP TABLE IF EXISTS tags");
 			onCreate(db);
 		}
 
@@ -105,22 +112,17 @@ public class MemoProvider extends ContentProvider {
 			values = new ContentValues();
 		}
 
-		if (!values.containsKey(Memo.Memos.ACTIVITY)) {
-			values.put(Memo.Memos.ACTIVITY, "Something");
+		if (!values.containsKey(Memo.Memos.TITLE)) {
+			values.put(Memo.Memos.TITLE, "Something");
 		}
 
-		if (!values.containsKey(Memo.Memos.CONTACT)) {
-			values.put(Memo.Memos.CONTACT, "");
+		if (!values.containsKey(Memo.Memos.CONTACTS)) {
+			values.put(Memo.Memos.CONTACTS, "");
 		}
 
 		if (!values.containsKey(Memo.Memos.LOCATION)) {
 			values.put(Memo.Memos.LOCATION, "");
 		}
-
-		if (!values.containsKey(Memo.Memos.DESCRIPTION)) {
-			values.put(Memo.Memos.DESCRIPTION, "");
-		}
-
 
 		if (!values.containsKey(Memo.Memos.TIME)) {
 			values.put(Memo.Memos.TIME, -1);
@@ -161,33 +163,33 @@ public class MemoProvider extends ContentProvider {
 			String sortOrder) {
 		QueryBuilder qb = new QueryBuilder();
 
-        switch (URI_MATCHER.match(uri)) {
-        case MEMOS:
-            qb.setTables("memos");
-            qb.setProjectionMap(MEMO_LIST_PROJECTION_MAP);
-            break;
+		switch (URI_MATCHER.match(uri)) {
+		case MEMOS:
+			qb.setTables("memos");
+			qb.setProjectionMap(MEMO_LIST_PROJECTION_MAP);
+			break;
 
-        case MEMO_ID:
-            qb.setTables("memos");
-            qb.appendWhere("_id=" + uri.getPathSegment(1));
-            break;
+		case MEMO_ID:
+			qb.setTables("memos");
+			qb.appendWhere("_id=" + uri.getPathSegment(1));
+			break;
 
-        default:
-            throw new IllegalArgumentException("Unknown URL " + uri);
-        }
+		default:
+			throw new IllegalArgumentException("Unknown URL " + uri);
+		}
 
-        // If no sort order is specified use the default
-        String orderBy;
-        if (TextUtils.isEmpty(sortOrder)) {
-            orderBy = Memo.Memos.DEFAULT_SORT_ORDER;
-        } else {
-            orderBy = sortOrder;
-        }
+		// If no sort order is specified use the default
+		String orderBy;
+		if (TextUtils.isEmpty(sortOrder)) {
+			orderBy = Memo.Memos.DEFAULT_SORT_ORDER;
+		} else {
+			orderBy = sortOrder;
+		}
 
-        Cursor c = qb.query(mDB, projection, selection, selectionArgs, groupBy,
-                having, orderBy);
-        c.setNotificationUri(getContext().getContentResolver(), uri);
-        return c;
+		Cursor c = qb.query(mDB, projection, selection, selectionArgs, groupBy,
+				having, orderBy);
+		c.setNotificationUri(getContext().getContentResolver(), uri);
+		return c;
 	}
 
 	@Override
@@ -221,9 +223,8 @@ public class MemoProvider extends ContentProvider {
 
 		MEMO_LIST_PROJECTION_MAP = new HashMap<String, String>();
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos._ID, "_id");
-		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.ACTIVITY, "activity");
-		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.DESCRIPTION, "description");
-		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CONTACT, "contact");
+		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.TITLE, "title");
+		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CONTACTS, "contacts");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.LOCATION, "location");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.TIME, "time");
 		MEMO_LIST_PROJECTION_MAP.put(Memo.Memos.CREATED_DATE, "created");

@@ -3,7 +3,6 @@ package com.esmertec.memo.activity;
 import java.util.Calendar;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.DatePicker;
@@ -156,10 +154,21 @@ public class MemoEditor extends Activity {
 				startActivity(intent);
 			}
 		});
+		
+		
+		ib = (ImageButton) findViewById(R.id.button_edit_title);
+		ib.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MemoProvider.ACTION_EDIT_TITLE, mURI);
+				startActivity(intent);
+			}
+		});
 
 		Log.v("qinyu", mURI.toString());
 		Log.v("qinyu", mCursor.toString());
-		Log.v("qinyu", mCursor.getString(Constants.ALL_COLUMN_ACTIVITY));
+		Log.v("qinyu", mCursor.getString(Constants.ALL_COLUMN_TITLE));
 
 		mCalendar = Calendar.getInstance();
 
@@ -249,9 +258,9 @@ public class MemoEditor extends Activity {
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();
-		mTextAllTags.setText(mCursor, Constants.ALL_COLUMN_ACTIVITY);
+		mTextAllTags.setText(mCursor, Constants.ALL_COLUMN_TITLE);
 		mTextAllContacts.setText(mCursor, Constants.ALL_COLUMN_CONTACT);
-		mEditDesc.setText(mCursor, Constants.ALL_COLUMN_DESCRIPTION);
+		mEditDesc.setText(mCursor, Constants.ALL_COLUMN_TITLE);
 		mTextLocation.setText(mCursor, Constants.ALL_COLUMN_LOCATION);
 		long time = mCursor.getLong(Constants.ALL_COLUMN_TIME);
 		if (time < 0) {
@@ -269,7 +278,7 @@ public class MemoEditor extends Activity {
 		// .getText().toString());
 		mCursor.updateString(Constants.ALL_COLUMN_LOCATION, mTextLocation
 				.getText().toString());
-		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, mEditDesc
+		mCursor.updateString(Constants.ALL_COLUMN_TITLE, mEditDesc
 				.getText().toString());
 		mCursor.updateLong(Constants.ALL_COLUMN_TIME, mCalendar
 				.getTimeInMillis());
@@ -382,7 +391,7 @@ public class MemoEditor extends Activity {
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();
-		mCursor.updateString(Constants.ALL_COLUMN_DESCRIPTION, newDescription);
+		mCursor.updateString(Constants.ALL_COLUMN_TITLE, newDescription);
 		managedCommitUpdates(mCursor);
 	}
 
@@ -431,7 +440,7 @@ public class MemoEditor extends Activity {
 		mCursor = managedQuery(mURI, Constants.ALL_COLUMNS_PROJECTION, null,
 				null);
 		mCursor.first();
-		String all_tags = mCursor.getString(Constants.ALL_COLUMN_ACTIVITY);
+		String all_tags = mCursor.getString(Constants.ALL_COLUMN_TITLE);
 
 		if (StringUtils.isEmpty(all_tags)) {
 			all_tags = newTag;
@@ -448,7 +457,7 @@ public class MemoEditor extends Activity {
 			}
 		}
 
-		mCursor.updateString(Constants.ALL_COLUMN_ACTIVITY, all_tags);
+		mCursor.updateString(Constants.ALL_COLUMN_TITLE, all_tags);
 		managedCommitUpdates(mCursor);
 	}
 
@@ -508,14 +517,14 @@ public class MemoEditor extends Activity {
 
 	private void fillData() {
 		TextView txtView = (TextView) findViewById(R.id.text_memo_title);
-		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_TITLE));
 		txtView = (TextView) findViewById(R.id.text_memo_time);
-		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_TITLE));
 		txtView = (TextView) findViewById(R.id.text_memo_title);
-		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_TITLE));
 		txtView = (TextView) findViewById(R.id.text_memo_title);
-		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_TITLE));
 		txtView = (TextView) findViewById(R.id.text_memo_title);
-		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_DESCRIPTION));
+		txtView.setText(mCursor.getString(Constants.ALL_COLUMN_TITLE));
 	}
 }

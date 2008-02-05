@@ -75,7 +75,7 @@ public class ContactEditor extends ListActivity {
 	}
 
 	private void refreshList() {
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACT,
+		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
 				Memo.Memos._ID }, null, null);
 		cursor.first();
 		String allContacts = cursor.getString(0);
@@ -92,7 +92,7 @@ public class ContactEditor extends ListActivity {
 
 	private void deleteContact(String str) {
 		Log.v(TAG, "Delete " + str);
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACT,
+		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
 				Memo.Memos._ID }, null, null);
 		cursor.first();
 		String allContacts = cursor.getString(0);
@@ -123,7 +123,7 @@ public class ContactEditor extends ListActivity {
 
 	private void addContact(String str) {
 		Log.v(TAG, "Add " + str);
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACT,
+		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
 				Memo.Memos._ID }, null, null);
 		cursor.first();
 		String allContacts = cursor.getString(0);

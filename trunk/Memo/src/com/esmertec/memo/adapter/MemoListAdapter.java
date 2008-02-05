@@ -18,7 +18,7 @@ public class MemoListAdapter extends ResourceCursorAdapter {
 
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-		((TextView)view.findViewById(R.id.activity_column)).setText(cursor.getString(Constants.ALL_COLUMN_ACTIVITY));
+		((TextView)view.findViewById(R.id.activity_column)).setText(cursor.getString(Constants.ALL_COLUMN_TITLE));
 		((TextView)view.findViewById(R.id.time_column)).setText(DateFormat.format("MMM dd, yyyy h:mmaa", cursor.getLong(Constants.ALL_COLUMN_TIME)));
 	}
 

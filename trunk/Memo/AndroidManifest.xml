@@ -101,6 +101,20 @@
 				<type android:value="vnd.esmertec.cursor.item/memo" />
 			</intent-filter>
 		</activity>
+		<activity class=".activity.TitleEditor"
+			android:label="Edit the title"
+			android:theme="@android:style/Theme.Dialog">
+			<intent-filter android:label="Edit Title">
+				<action
+					android:value="com.esmertec.memos.action.EDIT_TITLE" />
+				<category
+					android:value="android.intent.category.DEFAULT" />
+				<category
+					android:value="android.intent.category.SELECTED_ALTERNATIVE" />
+				<type android:value="vnd.esmertec.cursor.item/memo" />
+			</intent-filter>
+		</activity>
+		
 
 
 	</application>

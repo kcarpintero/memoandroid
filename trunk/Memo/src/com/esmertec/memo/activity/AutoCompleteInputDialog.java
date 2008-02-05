@@ -1,9 +1,5 @@
 package com.esmertec.memo.activity;
 
-import com.esmertec.memo.Constants;
-import com.esmertec.memo.R;
-import com.esmertec.memo.activity.MemoEditor.ContactListAdapter;
-
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,10 +9,12 @@ import android.provider.Contacts;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.Adapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ListAdapter;
+
+import com.esmertec.memo.Constants;
+import com.esmertec.memo.R;
+import com.esmertec.memo.activity.MemoEditor.ContactListAdapter;
 
 public class AutoCompleteInputDialog extends Activity {
 

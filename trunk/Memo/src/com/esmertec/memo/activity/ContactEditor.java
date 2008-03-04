@@ -3,7 +3,7 @@ package com.esmertec.memo.activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +25,7 @@ public class ContactEditor extends ListActivity {
 
 	private static final String TAG = ContactEditor.class.getName();
 
-	private ContentURI mURI;
+	private Uri mURI;
 	
 	private boolean mHasContacts;
 

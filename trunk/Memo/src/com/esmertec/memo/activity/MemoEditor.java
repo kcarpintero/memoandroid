@@ -8,7 +8,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Contacts;
 import android.util.DateFormat;
@@ -34,7 +34,7 @@ public class MemoEditor extends Activity {
 
 	private int mState;
 
-	private ContentURI mURI;
+	private Uri mURI;
 
 	private static final int STATE_INSERT = 0;
 

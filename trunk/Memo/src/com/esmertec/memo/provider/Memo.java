@@ -1,15 +1,20 @@
 package com.esmertec.memo.provider;
 
-import android.net.ContentURI;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public class Memo {
 	public static final class Memos implements BaseColumns {
-		
-		public static final String DEFAULT_SORT_ORDER = "modified DESC";//"date * 1440 + time DESC";
 
-		public static final ContentURI CONTENT_URI = ContentURI
-				.create("content://com.esmertec.memo/memos");
+		public static final String DEFAULT_SORT_ORDER = "modified DESC";// "date
+																		// *
+																		// 1440
+																		// +
+																		// time
+																		// DESC";
+
+		public static final Uri CONTENT_URI = Uri
+				.parse("content://com.esmertec.memo/memos");
 
 		public static final String TITLE = "title";
 		public static final String CONTACTS = "contacts";
@@ -33,13 +38,17 @@ public class Memo {
 		public static final String MODIFIED_DATE = "modified";
 
 	}
-	
-	
-	public static final class Tags implements BaseColumns{
-		public static final String DEFAULT_SORT_ORDER = "modified DESC";//"date * 1440 + time DESC";
 
-		public static final ContentURI CONTENT_URI = ContentURI
-				.create("content://com.esmertec.memo/tags");
+	public static final class Tags implements BaseColumns {
+		public static final String DEFAULT_SORT_ORDER = "modified DESC";// "date
+																		// *
+																		// 1440
+																		// +
+																		// time
+																		// DESC";
+
+		public static final Uri CONTENT_URI = Uri
+				.parse("content://com.esmertec.memo/tags");
 
 		public static final String NAME = "name";
 

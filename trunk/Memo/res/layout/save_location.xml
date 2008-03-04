@@ -23,7 +23,7 @@
     android:paddingRight="6dip"
     android:paddingBottom="3dip">
    					  
-    <EditText id="@+id/edit_location_label" 
+    <EditText android:id="@+id/edit_location_label" 
         android:maxLines="1" 
         android:layout_marginTop="2dip"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         android:scrollHorizontally="true" 
         android:hint="You can leave it blank"/>
    		
-    <Button id="@+id/button_save_location"
+    <Button android:id="@+id/button_save_location"
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:layout_gravity="right"

@@ -1,23 +1,23 @@
 package com.esmertec.memo.activity;
 
-import com.esmertec.memo.R;
-import com.esmertec.memo.provider.Memo;
-import com.esmertec.memo.provider.MemoProvider;
-import com.google.wireless.gdata.data.StringUtils;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.esmertec.memo.R;
+import com.esmertec.memo.provider.Memo;
+import com.esmertec.memo.provider.MemoProvider;
+import com.google.wireless.gdata.data.StringUtils;
+
 public class TitleEditor extends Activity {
 
-	private ContentURI mURI;
+	private Uri mURI;
 
 	private EditText mEdit;
 

@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,11 +20,11 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Point;
-import com.google.googlenav.Placemark;
-import com.google.googlenav.Search;
-import com.google.googlenav.map.Map;
-import com.google.googlenav.map.MapPoint;
-import com.google.googlenav.map.Zoom;
+//import com.google.googlenav.Placemark;
+//import com.google.googlenav.Search;
+//import com.google.googlenav.map.Map;
+//import com.google.googlenav.map.MapPoint;
+//import com.google.googlenav.map.Zoom;
 import com.google.wireless.gdata.data.StringUtils;
 
 public class MapBrowser extends MapActivity {
@@ -34,7 +34,7 @@ public class MapBrowser extends MapActivity {
 	private static final int STATE_BROWSE = 0;
 	private static final int STATE_SET_LOCATION = 1;
 
-	private ContentURI mURI;
+	private Uri mURI;
 
 	private MapView mMapView;
 
@@ -133,25 +133,25 @@ public class MapBrowser extends MapActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(Menu.FIRST, MENU_FIND, "Find...").setShortcut(
-				KeyEvent.KEYCODE_0, 0, KeyEvent.KEYCODE_F);
+				'0', 'f');
 		menu.add(Menu.FIRST, MENU_ZOOM_IN, "Zoom In").setShortcut(
-				KeyEvent.KEYCODE_1, 0, KeyEvent.KEYCODE_I);
+				'1', 'i');
 		menu.add(Menu.FIRST, MENU_ZOOM_OUT, "Zoom Out").setShortcut(
-				KeyEvent.KEYCODE_3, 0, KeyEvent.KEYCODE_O);
+				'3', 'o');
 		SubMenu subMenuView = menu.addSubMenu(Menu.FIRST, MENU_VIEW, "View");
 
 		subMenuView.add(SubMenu.FIRST, MENU_SATELLITE, "Satellite")
-				.setShortcut(KeyEvent.KEYCODE_7, 0, KeyEvent.KEYCODE_S);
+				.setShortcut('7', 's');
 		subMenuView.add(SubMenu.FIRST, MENU_TRAFFIC, "Trafic").setShortcut(
-				KeyEvent.KEYCODE_9, 0, KeyEvent.KEYCODE_T);
+				'9', 't');
 		subMenuView.add(SubMenu.FIRST, MENU_WEATHER, "Weather").setShortcut(
-				KeyEvent.KEYCODE_STAR, 0, KeyEvent.KEYCODE_W);
+				'*', 'w');
 		subMenuView.add(SubMenu.FIRST, MENU_CONTACT, "Contacts").setShortcut(
-				KeyEvent.KEYCODE_POUND, 0, KeyEvent.KEYCODE_C);
+				'#', 'c');
 
 		if (mState == STATE_SET_LOCATION) {
 			menu.add(Menu.FIRST, MENU_SAVE_LOCATION, "Save Location")
-					.setShortcut(KeyEvent.KEYCODE_5, 0, KeyEvent.KEYCODE_L);
+					.setShortcut('5', 'l');
 		}
 
 		return super.onCreateOptionsMenu(menu);
@@ -310,49 +310,49 @@ public class MapBrowser extends MapActivity {
 			saveLocation();
 			return true;
 		} else if (keyCode == KeyEvent.KEYCODE_P) {
-			// W00t! Search for Pizza.
-			// Create a MapPoint from the map's coordinates
-			MapPoint mapPoint = new MapPoint(mMapView.getMapCenter()
-					.getLatitudeE6(), mMapView.getMapCenter().getLongitudeE6());
-			// Create a dummy Map for use in Search
-			Map map = new Map(getDispatcher(), null, 0, 0, 0, mapPoint, Zoom
-					.getZoom(mMapView.getZoomLevel()), 0);
-			// Search for Pizza near the specified coordinates
-			Search search = new Search("London", map, 0);
-
-			// add the request the dispatcher
-			getDispatcher().addDataRequest(search);
-			// Wait for the search to complete, Should do this
-			// in another thread ideally, this is just for illustration here.
-			while (!search.isComplete()) {
-				Log.i(TAG, ".");
-			}
-
-			// Print the details.
-			Log.i(TAG, "Done - " + search.numPlacemarks());
-			MapPoint point = null;
-			for (int i = 0; i < search.numPlacemarks(); i++) {
-				Placemark placemark = search.getPlacemark(i);
-				point = placemark.getLocation();
-				Log.i(TAG, " - i : " + Integer.toString(i));
-				Log.i(TAG, "- Bubble : " + placemark.getBubbleDescriptor());
-				Log.i(TAG, "- Detail : " + placemark.getDetailsDescriptor());
-				Log.i(TAG, "- Title : " + placemark.getTitle());
-				Log
-						.i(TAG, "- Location : "
-								+ placemark.getLocation().toString());
-				Log.i(TAG, "- routable : " + placemark.routableString());
-			}
-
-			// Animate to the last location.
-			if (point != null) {
-				MapController mc = mMapView.getController();
-				Point point1 = new Point(point.getLatitude(), point
-						.getLongitude());
-				mc.animateTo(point1);
-				mc.zoomTo(12);
-				Log.i("animateTo", point1.toString());
-			}
+//			// W00t! Search for Pizza.
+//			// Create a MapPoint from the map's coordinates
+//			MapPoint mapPoint = new MapPoint(mMapView.getMapCenter()
+//					.getLatitudeE6(), mMapView.getMapCenter().getLongitudeE6());
+//			// Create a dummy Map for use in Search
+//			Map map = new Map(getDispatcher(), null, 0, 0, 0, mapPoint, Zoom
+//					.getZoom(mMapView.getZoomLevel()), 0);
+//			// Search for Pizza near the specified coordinates
+//			Search search = new Search("London", map, 0);
+//
+//			// add the request the dispatcher
+//			getDispatcher().addDataRequest(search);
+//			// Wait for the search to complete, Should do this
+//			// in another thread ideally, this is just for illustration here.
+//			while (!search.isComplete()) {
+//				Log.i(TAG, ".");
+//			}
+//
+//			// Print the details.
+//			Log.i(TAG, "Done - " + search.numPlacemarks());
+//			MapPoint point = null;
+//			for (int i = 0; i < search.numPlacemarks(); i++) {
+//				Placemark placemark = search.getPlacemark(i);
+//				point = placemark.getLocation();
+//				Log.i(TAG, " - i : " + Integer.toString(i));
+//				Log.i(TAG, "- Bubble : " + placemark.getBubbleDescriptor());
+//				Log.i(TAG, "- Detail : " + placemark.getDetailsDescriptor());
+//				Log.i(TAG, "- Title : " + placemark.getTitle());
+//				Log
+//						.i(TAG, "- Location : "
+//								+ placemark.getLocation().toString());
+//				Log.i(TAG, "- routable : " + placemark.routableString());
+//			}
+//
+//			// Animate to the last location.
+//			if (point != null) {
+//				MapController mc = mMapView.getController();
+//				Point point1 = new Point(point.getLatitude(), point
+//						.getLongitude());
+//				mc.animateTo(point1);
+//				mc.zoomTo(12);
+//				Log.i("animateTo", point1.toString());
+//			}
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

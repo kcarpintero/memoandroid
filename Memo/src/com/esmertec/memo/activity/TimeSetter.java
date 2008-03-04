@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
@@ -18,7 +18,7 @@ import com.esmertec.memo.provider.MemoProvider;
 public class TimeSetter extends Activity {
 	private Calendar mCalendar;
 
-	private ContentURI mURI;
+	private Uri mURI;
 
 	private DatePicker mDatePicker;
 

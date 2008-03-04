@@ -95,23 +95,23 @@
 		android:layout_height="wrap_content" android:scrollbars="vertical"
 		android:padding="5px">
 
-		<TextView id="@+id/text_memo_title"
+		<TextView android:id="@+id/text_memo_title"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
-			android:hint="Someting to do" android:hintTextColor="#000000" />
-		<TextView id="@+id/text_memo_time"
+			android:hint="Someting to do" />
+		<TextView android:id="@+id/text_memo_time"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
 			android:hint="At some time" />
-		<TextView id="@+id/text_memo_contacts"
+		<TextView android:id="@+id/text_memo_contacts"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
 			android:hint="With some body" />
-		<TextView id="@+id/text_memo_location"
+		<TextView android:id="@+id/text_memo_location"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
 			android:hint="At some where" />
-		<TextView id="@+id/text_memo_tags"
+		<TextView android:id="@+id/text_memo_tags"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
 			android:hint="Tags..." />
@@ -122,7 +122,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:paddingBottom="5px">
 
-		<TextView id="@+id/text_button_hint"
+		<TextView android:id="@+id/text_button_hint"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:textAlign="center"
 			android:text="@string/button_hint_default" />
@@ -131,19 +131,19 @@
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal">
 
-			<ImageButton id="@+id/button_edit_title"
+			<ImageButton android:id="@+id/button_edit_title"
 				android:src="@drawable/title" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton id="@+id/button_set_time"
+			<ImageButton android:id="@+id/button_set_time"
 				android:src="@drawable/time" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton id="@+id/button_edit_contacts"
+			<ImageButton android:id="@+id/button_edit_contacts"
 				android:src="@drawable/contacts" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton id="@+id/button_set_location"
+			<ImageButton android:id="@+id/button_set_location"
 				android:src="@drawable/location" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
-			<ImageButton id="@+id/button_edit_tags"
+			<ImageButton android:id="@+id/button_edit_tags"
 				android:src="@drawable/tags" android:layout_width="wrap_content"
 				android:layout_height="wrap_content" android:padding="5px" />
 

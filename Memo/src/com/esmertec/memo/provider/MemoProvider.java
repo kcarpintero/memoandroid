@@ -3,14 +3,15 @@ package com.esmertec.memo.provider;
 import java.util.HashMap;
 
 import android.content.ContentProvider;
-import android.content.ContentProviderDatabaseHelper;
-import android.content.ContentURIParser;
+import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.QueryBuilder;
+import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ContentURI;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -28,14 +29,14 @@ public class MemoProvider extends ContentProvider {
 	private static final String DATABASE_NAME = "memo.db";
 	private static final int DATABASE_VERSION = 3;
 
-	private static final ContentURIParser URI_MATCHER;
+	private static final UriMatcher URI_MATCHER;
 
 	private static final int MEMOS = 1;
 	private static final int MEMO_ID = 2;
 
 	private static final HashMap<String, String> MEMO_LIST_PROJECTION_MAP;
 
-	private static class DatabaseHelper extends ContentProviderDatabaseHelper {
+	private static class DatabaseHelper extends SQLiteOpenHelper {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
@@ -64,7 +65,7 @@ public class MemoProvider extends ContentProvider {
 	}
 
 	@Override
-	public int delete(ContentURI uri, String where, String[] whereArgs) {
+	public int delete(Uri uri, String where, String[] whereArgs) {
 		int code = URI_MATCHER.match(uri);
 		int count = 0;
 		switch (code) {
@@ -72,7 +73,7 @@ public class MemoProvider extends ContentProvider {
 			count = mDB.delete("memos", where, whereArgs);
 			break;
 		case MEMO_ID:
-			String id = uri.getPathSegment(1);
+			String id = uri.getPathSegments().get(1);
 			count = mDB.delete("memos",
 					"_id="
 							+ id
@@ -87,7 +88,7 @@ public class MemoProvider extends ContentProvider {
 	}
 
 	@Override
-	public String getType(ContentURI uri) {
+	public String getType(Uri uri) {
 		int code = URI_MATCHER.match(uri);
 		switch (code) {
 		case MEMOS:
@@ -101,7 +102,7 @@ public class MemoProvider extends ContentProvider {
 	}
 
 	@Override
-	public ContentURI insert(ContentURI uri, ContentValues initialValues) {
+	public Uri insert(Uri uri, ContentValues initialValues) {
 		if (URI_MATCHER.match(uri) != MEMOS) {
 			throw new IllegalArgumentException("Unknown URL " + uri);
 		}
@@ -141,7 +142,7 @@ public class MemoProvider extends ContentProvider {
 
 		long rowID = mDB.insert("memos", "activity", values);
 		if (rowID > 0) {
-			ContentURI newUri = Memo.Memos.CONTENT_URI.addId(rowID);
+			Uri newUri = ContentUris.withAppendedId(Memo.Memos.CONTENT_URI, rowID);
 			getContext().getContentResolver().notifyChange(newUri, null);
 			return newUri;
 		}
@@ -158,10 +159,10 @@ public class MemoProvider extends ContentProvider {
 	}
 
 	@Override
-	public Cursor query(ContentURI uri, String[] projection, String selection,
-			String[] selectionArgs, String groupBy, String having,
+	public Cursor query(Uri uri, String[] projection, String selection,
+			String[] selectionArgs, 
 			String sortOrder) {
-		QueryBuilder qb = new QueryBuilder();
+		SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
 		switch (URI_MATCHER.match(uri)) {
 		case MEMOS:
@@ -171,7 +172,7 @@ public class MemoProvider extends ContentProvider {
 
 		case MEMO_ID:
 			qb.setTables("memos");
-			qb.appendWhere("_id=" + uri.getPathSegment(1));
+			qb.appendWhere("_id=" + uri.getPathSegments().get(1));
 			break;
 
 		default:
@@ -186,14 +187,14 @@ public class MemoProvider extends ContentProvider {
 			orderBy = sortOrder;
 		}
 
-		Cursor c = qb.query(mDB, projection, selection, selectionArgs, groupBy,
-				having, orderBy);
+		Cursor c = qb.query(mDB, projection, selection, selectionArgs, null,
+				null, orderBy);
 		c.setNotificationUri(getContext().getContentResolver(), uri);
 		return c;
 	}
 
 	@Override
-	public int update(ContentURI uri, ContentValues values, String selection,
+	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
 		int code = URI_MATCHER.match(uri);
 		int count = 0;
@@ -202,7 +203,7 @@ public class MemoProvider extends ContentProvider {
 			count = mDB.update("memos", values, selection, selectionArgs);
 			break;
 		case MEMO_ID:
-			String id = uri.getPathSegment(1);
+			String id = uri.getPathSegments().get(1);
 			count = mDB.update("memos", values, "_id="
 					+ id
 					+ (!TextUtils.isEmpty(selection) ? " AND (" + selection
@@ -217,7 +218,7 @@ public class MemoProvider extends ContentProvider {
 	}
 
 	static {
-		URI_MATCHER = new ContentURIParser(ContentURIParser.NO_MATCH);
+		URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 		URI_MATCHER.addURI("com.esmertec.memo", "memos", MEMOS);
 		URI_MATCHER.addURI("com.esmertec.memo", "memos/#", MEMO_ID);
 

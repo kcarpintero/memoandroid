@@ -1,9 +1,10 @@
 package com.esmertec.memo.activity;
 
 import android.app.ListActivity;
+import android.content.ContentUris;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.ContentURI;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -61,8 +62,8 @@ public class MemoList extends ListActivity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		managedCommitUpdates(cursor);
 		if (cursor.count() > 0) {
-			ContentURI uri = getIntent().getData().addId(
-					cursor.getLong(Constants.ALL_COLUMN_ID));
+			Uri uri = ContentUris.withAppendedId(getIntent().getData(), cursor.getLong(Constants.ALL_COLUMN_ID));
+
 			Intent[] specifics = new Intent[] { new Intent(Intent.EDIT_ACTION,
 					uri) };
 
@@ -70,7 +71,7 @@ public class MemoList extends ListActivity {
 			intent.addCategory(Intent.SELECTED_ALTERNATIVE_CATEGORY);
 
 			menu.addIntentOptions(Menu.SELECTED_ALTERNATIVE, 0, null,
-					specifics, intent, Menu.NO_SEPARATOR_AFTER, null);
+					specifics, intent, 0, null);
 			if (menu.findItem(DELETE_MEMO_ITEM) == null)
 				menu.add(Menu.FIRST, DELETE_MEMO_ITEM,
 						R.string.menu_delete_memo);
@@ -98,7 +99,8 @@ public class MemoList extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		ContentURI uri = getIntent().getData().addId(cursor.getLong(0));
+		Uri uri = ContentUris.withAppendedId(getIntent().getData(), cursor.getLong(Constants.ALL_COLUMN_ID));
+
 		Intent intent = new Intent(Intent.EDIT_ACTION, uri);
 		// Log.v("qinyu","has default category:" +
 		// intent.hasCategory(Intent.DEFAULT_CATEGORY));

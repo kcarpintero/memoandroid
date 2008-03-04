@@ -36,8 +36,7 @@ public class AutoCompleteInputDialog extends Activity {
 		mAutoCompleteTxt = (AutoCompleteTextView) findViewById(R.id.auto_complete_txt);
 		Intent intent = getIntent();
 		if (intent != null) {
-			if (CONTACT_ADAPTER.equals(intent
-					.getExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER))) {
+			if (CONTACT_ADAPTER.equals(intent.getStringExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER))) {
 				ContentResolver content = getContentResolver();
 				Cursor cursor = content.query(Contacts.People.CONTENT_URI,
 						MemoEditor.PEOPLE_PROJECTION, null, null,

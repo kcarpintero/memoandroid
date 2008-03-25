@@ -1,3 +1,4 @@
+
 package com.esmertec.memo.activity;
 
 import android.app.Activity;
@@ -18,55 +19,58 @@ import com.esmertec.memo.activity.MemoEditor.ContactListAdapter;
 
 public class AutoCompleteInputDialog extends Activity {
 
-	public static final String CONTACT_ADAPTER = "Contact Adapter";
-	
-	public static final String TAG_ADAPTER = "Tag Adapter";
+    public static final String CONTACT_ADAPTER = "Contact Adapter";
 
-	private AutoCompleteTextView mAutoCompleteTxt;
-	private Button mButtonSave, mButtonCancel;
+    public static final String TAG_ADAPTER = "Tag Adapter";
 
-	@Override
-	protected void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
+    private AutoCompleteTextView mAutoCompleteTxt;
+    private Button mButtonSave, mButtonCancel;
 
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+    @Override
+    protected void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
 
-		setContentView(R.layout.autocomplete_input);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		mAutoCompleteTxt = (AutoCompleteTextView) findViewById(R.id.auto_complete_txt);
-		Intent intent = getIntent();
-		if (intent != null) {
-			if (CONTACT_ADAPTER.equals(intent.getStringExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER))) {
-				ContentResolver content = getContentResolver();
-				Cursor cursor = content.query(Contacts.People.CONTENT_URI,
-						MemoEditor.PEOPLE_PROJECTION, null, null,
-						Contacts.People.DEFAULT_SORT_ORDER);
-				ContactListAdapter adapter = new ContactListAdapter(cursor,
-						this);
-				mAutoCompleteTxt.setAdapter(adapter);
-			}
-		}
-		
+        setContentView(R.layout.autocomplete_input);
 
-		mButtonSave = (Button) findViewById(R.id.button_save_auto_complete_txt);
-		mButtonSave.setOnClickListener(new OnClickListener() {
+        mAutoCompleteTxt =
+                (AutoCompleteTextView) findViewById(R.id.auto_complete_txt);
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (CONTACT_ADAPTER.equals(intent
+                    .getStringExtra(Constants.INTENT_AUTOCOMPLETE_ADAPTER))) {
+                ContentResolver content = getContentResolver();
+                Cursor cursor =
+                        content.query(Contacts.People.CONTENT_URI,
+                                MemoEditor.PEOPLE_PROJECTION, null, null,
+                                Contacts.People.DEFAULT_SORT_ORDER);
+                ContactListAdapter adapter =
+                        new ContactListAdapter(cursor, this);
+                mAutoCompleteTxt.setAdapter(adapter);
+            }
+        }
 
-			@Override
-			public void onClick(View arg0) {
-				setResult(RESULT_OK, mAutoCompleteTxt.getText().toString());
-				finish();
-			}
-		});
+        mButtonSave = (Button) findViewById(R.id.button_save_auto_complete_txt);
+        mButtonSave.setOnClickListener(new OnClickListener() {
 
-		mButtonCancel = (Button) findViewById(R.id.button_cancel_auto_complete_txt);
-		mButtonCancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                setResult(RESULT_OK, mAutoCompleteTxt.getText().toString());
+                finish();
+            }
+        });
 
-			@Override
-			public void onClick(View arg0) {
-				setResult(RESULT_CANCELED);
-				finish();
-			}
-		});
-	}
+        mButtonCancel =
+                (Button) findViewById(R.id.button_cancel_auto_complete_txt);
+        mButtonCancel.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
+    }
 
 }

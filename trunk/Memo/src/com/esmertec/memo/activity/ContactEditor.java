@@ -1,3 +1,4 @@
+
 package com.esmertec.memo.activity;
 
 import android.app.ListActivity;
@@ -23,153 +24,156 @@ import com.google.wireless.gdata.data.StringUtils;
 
 public class ContactEditor extends ListActivity {
 
-	private static final String TAG = ContactEditor.class.getName();
+    private static final String TAG = ContactEditor.class.getName();
 
-	private Uri mURI;
-	
-	private boolean mHasContacts;
+    private Uri mURI;
 
-	private AutoCompleteTextView mTextContact;
+    private boolean mHasContacts;
 
-	@Override
-	protected void onCreate(Bundle icicle) {
+    private AutoCompleteTextView mTextContact;
 
-		super.onCreate(icicle);
+    @Override
+    protected void onCreate(Bundle icicle) {
 
-		Intent intent = getIntent();
+        super.onCreate(icicle);
 
-		if (intent == null) {
-			finish();
-			return;
-		}
+        Intent intent = getIntent();
 
-		if (!intent.getAction().equals(MemoProvider.ACTION_EDIT_CONTACTS)) {
-			finish();
-			return;
-		}
+        if (intent == null) {
+            finish();
+            return;
+        }
 
-		mURI = intent.getData();
+        if (!intent.getAction().equals(MemoProvider.ACTION_EDIT_CONTACTS)) {
+            finish();
+            return;
+        }
 
-		if (mURI == null) {
-			finish();
-			return;
-		}
+        mURI = intent.getData();
 
-		setContentView(R.layout.contacts_editor);
+        if (mURI == null) {
+            finish();
+            return;
+        }
 
-		refreshList();
+        setContentView(R.layout.contacts_editor);
 
-		Button button = (Button) findViewById(R.id.button_save_auto_complete_contact);
+        refreshList();
 
-		mTextContact = (AutoCompleteTextView) findViewById(R.id.auto_complete_contact);
+        Button button =
+                (Button) findViewById(R.id.button_save_auto_complete_contact);
 
-		button.setOnClickListener(new OnClickListener() {
+        mTextContact =
+                (AutoCompleteTextView) findViewById(R.id.auto_complete_contact);
 
-			@Override
-			public void onClick(View arg0) {
-				addContact(mTextContact.getText().toString());
-				refreshList();
-			}
-		});
+        button.setOnClickListener(new OnClickListener() {
 
-	}
+            @Override
+            public void onClick(View arg0) {
+                addContact(mTextContact.getText().toString());
+                refreshList();
+            }
+        });
 
-	private void refreshList() {
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
-				Memo.Memos._ID }, null, null);
-		cursor.first();
-		String allContacts = cursor.getString(0);
+    }
 
-		String[] contactList = new String[] {};
+    private void refreshList() {
+        Cursor cursor =
+                managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
+                        Memo.Memos._ID }, null, null);
+        cursor.first();
+        String allContacts = cursor.getString(0);
 
-		if (!StringUtils.isEmpty(allContacts)) {
-			contactList = allContacts.split(", ");
-		}
-		mHasContacts = contactList.length > 0;
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, contactList));
-	}
+        String[] contactList = new String[] {};
 
-	private void deleteContact(String str) {
-		Log.v(TAG, "Delete " + str);
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
-				Memo.Memos._ID }, null, null);
-		cursor.first();
-		String allContacts = cursor.getString(0);
+        if (!StringUtils.isEmpty(allContacts)) {
+            contactList = allContacts.split(", ");
+        }
+        mHasContacts = contactList.length > 0;
+        setListAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, contactList));
+    }
 
-		Log.v(TAG, "old allContacts = " + allContacts);
-		String[] contactList = new String[] {};
+    private void deleteContact(String str) {
+        Log.v(TAG, "Delete " + str);
+        Cursor cursor =
+                managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
+                        Memo.Memos._ID }, null, null);
+        cursor.first();
+        String allContacts = cursor.getString(0);
 
-		if (!StringUtils.isEmpty(allContacts)) {
-			contactList = allContacts.split(", ");
-		}
+        Log.v(TAG, "old allContacts = " + allContacts);
+        String[] contactList = new String[] {};
 
-		allContacts = "";
-		for (String contact : contactList) {
-			if (contact.equals(str)) {
-				continue;
-			}
-			if (!StringUtils.isEmpty(allContacts)) {
-				allContacts += ", ";
-			}
-			allContacts += contact;
-		}
+        if (!StringUtils.isEmpty(allContacts)) {
+            contactList = allContacts.split(", ");
+        }
 
-		Log.v(TAG, "new allContacts = " + allContacts);
-		cursor.updateString(0, allContacts);
-		managedCommitUpdates(cursor);
-		cursor.deactivate();
-	}
+        allContacts = "";
+        for (String contact : contactList) {
+            if (contact.equals(str)) {
+                continue;
+            }
+            if (!StringUtils.isEmpty(allContacts)) {
+                allContacts += ", ";
+            }
+            allContacts += contact;
+        }
 
-	private void addContact(String str) {
-		Log.v(TAG, "Add " + str);
-		Cursor cursor = managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
-				Memo.Memos._ID }, null, null);
-		cursor.first();
-		String allContacts = cursor.getString(0);
+        Log.v(TAG, "new allContacts = " + allContacts);
+        cursor.updateString(0, allContacts);
+        managedCommitUpdates(cursor);
+        cursor.deactivate();
+    }
 
-		String[] contactList = new String[] {};
+    private void addContact(String str) {
+        Log.v(TAG, "Add " + str);
+        Cursor cursor =
+                managedQuery(mURI, new String[] { Memo.Memos.CONTACTS,
+                        Memo.Memos._ID }, null, null);
+        cursor.first();
+        String allContacts = cursor.getString(0);
 
-		if (!StringUtils.isEmpty(allContacts)) {
-			contactList = allContacts.split(", ");
-		}
+        String[] contactList = new String[] {};
 
-		allContacts = str;
-		for (String contact : contactList) {
-			if (contact.equals(str)) {
-				continue;
-			}
-			if (!StringUtils.isEmpty(allContacts)) {
-				allContacts += ", ";
-			}
-			allContacts += contact;
-		}
+        if (!StringUtils.isEmpty(allContacts)) {
+            contactList = allContacts.split(", ");
+        }
 
-		cursor.updateString(0, allContacts);
-		managedCommitUpdates(cursor);
-		cursor.deactivate();
-	}
+        allContacts = str;
+        for (String contact : contactList) {
+            if (contact.equals(str)) {
+                continue;
+            }
+            if (!StringUtils.isEmpty(allContacts)) {
+                allContacts += ", ";
+            }
+            allContacts += contact;
+        }
 
-	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		deleteContact(((TextView) v).getText().toString());
-		refreshList();
-	}
+        cursor.updateString(0, allContacts);
+        managedCommitUpdates(cursor);
+        cursor.deactivate();
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(Item item) {
-		// TODO Call the selected contact 
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        deleteContact(((TextView) v).getText().toString());
+        refreshList();
+    }
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		if (mHasContacts){
-			//TODO Add the menu options to call selected contact
-		}
-		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	
+    @Override
+    public boolean onOptionsItemSelected(Item item) {
+        // TODO Call the selected contact
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (mHasContacts) {
+            // TODO Add the menu options to call selected contact
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
 
 }
